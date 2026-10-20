@@ -2,7 +2,7 @@
 
 import { MapPin, Star, Sparkles, CheckCircle } from 'lucide-react';
 
-export default function PortalHeader({ restaurant }) {
+export default function PortalHeader({ restaurant, googleReviewUrl }) {
   const name = restaurant?.name || "Anbu'de Cafe";
   const cuisineType = restaurant?.cuisineType || 'Artisan Cafe · Fast Food · Beverages';
   const address = restaurant?.address || 'Maraimalai Nagar, Chennai';
@@ -88,10 +88,24 @@ export default function PortalHeader({ restaurant }) {
             Open Now
           </span>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40 shadow-2xs">
-            <Star className="w-3.5 h-3.5 fill-[#FFBB17] text-[#FFBB17]" />
-            {rating.replace('Google reviews', 'Google')}
-          </span>
+          {/* Google Review Badge (Direct link on mobile) */}
+          {googleReviewUrl ? (
+            <a
+              href={googleReviewUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40 shadow-2xs hover:bg-[#FFBB17] hover:text-gray-950 transition-colors"
+              title="Rate Anbu Cafe on Google"
+            >
+              <Star className="w-3.5 h-3.5 fill-[#FFBB17] text-[#FFBB17]" />
+              <span>{rating.replace('Google reviews', 'Google')}</span>
+            </a>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40 shadow-2xs">
+              <Star className="w-3.5 h-3.5 fill-[#FFBB17] text-[#FFBB17]" />
+              <span>{rating.replace('Google reviews', 'Google')}</span>
+            </span>
+          )}
 
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-gray-50 text-gray-600 border border-gray-200">
             <MapPin className="w-3.5 h-3.5 text-gray-400" />

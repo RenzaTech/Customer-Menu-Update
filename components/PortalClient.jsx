@@ -58,6 +58,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
   }, [slug]);
 
   const restaurantName = restaurant?.name || "Anbu'de Cafe";
+  const googleReviewUrl =
+    restaurant?.googleReviewUrl ||
+    'https://maps.google.com/?q=Anbu+cafe+Maraimalai+Nagar';
 
   // Navigation handlers
   const handleOpenMenu = () => {
@@ -94,7 +97,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
           {/* VIEW 1: Main Dining Hub */}
           {currentView === 'hub' && (
             <>
-              <PortalHeader restaurant={restaurant} />
+              <PortalHeader restaurant={restaurant} googleReviewUrl={googleReviewUrl} />
 
               <main className="w-full px-4 sm:px-5 pt-4 pb-6 space-y-3">
                 <div className="text-center pb-1">
@@ -127,7 +130,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   onClick={handleOpenFeedback}
                 />
 
-                {/* Action Card 3: Leave a Google Review */}
+                {/* Action Card 3: Leave a Google Review (Direct redirect on mobile) */}
                 <ActionCard
                   icon={Star}
                   iconBgColor="bg-[#FFF8E7]"
@@ -135,7 +138,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   iconBorderColor="border-[#FFBB17]/40"
                   title="LEAVE A GOOGLE REVIEW"
                   subtitle="Rate us 5 stars on Google Maps"
-                  onClick={() => setReviewOpen(true)}
+                  href={googleReviewUrl}
                 />
               </main>
 
