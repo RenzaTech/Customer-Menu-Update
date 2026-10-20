@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Check, Sparkles, Eye, Layers, Plus, ShoppingBag } from 'lucide-react';
+import { X, Check, Plus, ShoppingBag } from 'lucide-react';
 
-// Curated high quality photographic pairs (Top View & Side View) for cafe categories
+// Curated high quality food photography for cafe categories
 export const FOOD_IMAGE_PAIRS = {
   omelette: {
     side: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&w=800&q=80',
@@ -92,12 +92,12 @@ export function getDishImagePair(dish = {}) {
   else if (combined.includes('falooda')) pair = FOOD_IMAGE_PAIRS.falooda;
   else if (combined.includes('ice cream')) pair = FOOD_IMAGE_PAIRS.iceCream;
 
-  // Use dish's own topViewImageUrl and imageUrl/sideImageUrl if available
   const topView = dish.topViewImageUrl || dish.top_view_image_url || pair.top;
   const sideView = dish.sideImageUrl || dish.side_view_image_url || dish.imageUrl || pair.side;
+  const imageUrl = dish.imageUrl || sideView || topView;
   const description = dish.description || pair.desc;
 
-  return { topView, sideView, description };
+  return { topView, sideView, imageUrl, description };
 }
 
 function formatPrice(price) {
@@ -108,14 +108,12 @@ function formatPrice(price) {
 }
 
 export default function DishDetailModal({ dish, onClose, onAddToCart }) {
-  const [activeView, setActiveView] = useState('side'); // 'side' | 'top'
   const [justAdded, setJustAdded] = useState(false);
 
   if (!dish) return null;
 
   const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
-  const { topView, sideView, description } = getDishImagePair(dish);
-  const currentImageUrl = activeView === 'top' ? topView : sideView;
+  const { imageUrl, description } = getDishImagePair(dish);
 
   const handleAdd = () => {
     if (onAddToCart) {
@@ -134,12 +132,11 @@ export default function DishDetailModal({ dish, onClose, onAddToCart }) {
         className="w-full max-w-md bg-white rounded-t-3xl sm:rounded-2xl overflow-hidden shadow-2xl border border-gray-200 text-gray-800 animate-in fade-in slide-in-from-bottom duration-200 max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Image Showcase with View Angle Toggle */}
+        {/* Top Dish Image Showcase */}
         <div className="relative w-full h-64 sm:h-72 bg-gray-100 shrink-0 overflow-hidden">
           <img
-            key={currentImageUrl}
-            src={currentImageUrl}
-            alt={`${dish.name} - ${activeView} view`}
+            src={imageUrl}
+            alt={dish.name}
             className="w-full h-full object-cover transition-all duration-300"
           />
 
@@ -147,38 +144,11 @@ export default function DishDetailModal({ dish, onClose, onAddToCart }) {
           <button
             type="button"
             onClick={onClose}
-            className="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/95 text-gray-700 shadow-md flex items-center justify-center hover:bg-white hover:text-black transition"
+            className="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-white/95 text-gray-700 shadow-md flex items-center justify-center hover:bg-white hover:text-black transition active:scale-95"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
-
-          {/* View Angle Pill Switcher Floating at Bottom of Image with #FFBB17 */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 p-1 bg-white/95 backdrop-blur-md rounded-full shadow-lg border border-gray-200/90">
-            <button
-              type="button"
-              onClick={() => setActiveView('side')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                activeView === 'side'
-                  ? 'bg-[#FFBB17] text-gray-950 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              <span>Side View</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveView('top')}
-              className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                activeView === 'top'
-                  ? 'bg-[#FFBB17] text-gray-950 shadow-xs'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              <span>Top View</span>
-            </button>
-          </div>
         </div>
 
         {/* Dish Content Body */}
@@ -201,27 +171,24 @@ export default function DishDetailModal({ dish, onClose, onAddToCart }) {
                   />
                 </span>
 
-                <h2 className="text-lg sm:text-xl font-serif font-bold text-gray-900 tracking-tight">
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight font-sans">
                   {dish.name}
                 </h2>
               </div>
 
               {/* Price */}
               <div className="text-right shrink-0">
-                <span className="text-lg sm:text-xl font-bold text-gray-900 font-sans">
+                <span className="text-lg sm:text-xl font-bold text-gray-950 font-sans">
                   {formatPrice(dish.price)}
                 </span>
               </div>
             </div>
 
-            {/* Availability Pill */}
-            <div className="mt-2 flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40">
+            {/* Freshly Prepared Pill */}
+            <div className="mt-2.5 flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FFBB17]" />
-                Freshly Prepared
-              </span>
-              <span className="text-xs text-gray-400 font-sans">
-                Active Angle: <strong className="text-gray-800 capitalize font-bold">{activeView} View</strong>
+                Freshly Prepared on Order
               </span>
             </div>
           </div>
@@ -237,20 +204,20 @@ export default function DishDetailModal({ dish, onClose, onAddToCart }) {
           </div>
 
           {/* Action Buttons: Add to Cart + Close */}
-          <div className="pt-3 flex items-center gap-2">
+          <div className="pt-3 flex items-center gap-2.5">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 px-4 rounded-xl border border-gray-200 text-gray-700 text-xs font-bold hover:bg-gray-50 transition"
+              className="flex-1 py-3 px-4 rounded-xl border border-gray-200 text-gray-700 text-xs font-bold hover:bg-gray-50 transition active:scale-95 font-sans"
             >
-              Back
+              Close
             </button>
 
             {onAddToCart && (
               <button
                 type="button"
                 onClick={handleAdd}
-                className="flex-2 py-3 px-4 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 active:scale-95"
+                className="flex-2 py-3 px-4 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 active:scale-95 font-sans"
               >
                 {justAdded ? (
                   <>

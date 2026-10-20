@@ -4,11 +4,10 @@ import { useState, useMemo } from 'react';
 import {
   ArrowLeft,
   Search,
-  ChevronRight,
   ShoppingBag,
   Plus,
   Minus,
-  Eye,
+  ChevronRight,
 } from 'lucide-react';
 import DishDetailModal, { getDishImagePair } from './DishDetailModal';
 import CartDrawer from './CartDrawer';
@@ -18,7 +17,7 @@ function VegBadge({ isVeg }) {
     return (
       <span
         title="Vegetarian"
-        className="w-4 h-4 rounded-sm border border-emerald-600 flex items-center justify-center shrink-0 bg-white"
+        className="w-4 h-4 rounded-sm border border-emerald-600 flex items-center justify-center shrink-0 bg-white shadow-2xs"
       >
         <span className="w-2 h-2 rounded-full bg-emerald-600" />
       </span>
@@ -28,7 +27,7 @@ function VegBadge({ isVeg }) {
   return (
     <span
       title="Non-Vegetarian"
-      className="w-4 h-4 rounded-sm border border-rose-600 flex items-center justify-center shrink-0 bg-white"
+      className="w-4 h-4 rounded-sm border border-rose-600 flex items-center justify-center shrink-0 bg-white shadow-2xs"
     >
       <span className="w-2 h-2 rounded-full bg-rose-600" />
     </span>
@@ -112,23 +111,23 @@ export default function CategoryDishes({
   }, [items, searchQuery, dietaryFilter]);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto px-4 sm:px-5 py-4 pb-24 animate-in fade-in duration-200">
-      {/* Top Header / Back Button & Cart Indicator */}
+    <div className="relative w-full max-w-lg mx-auto px-4 sm:px-5 py-4 pb-28 animate-in fade-in duration-200">
+      {/* Top Navigation Row: Back Button & Cart Pill */}
       <div className="flex items-center justify-between pb-3.5 border-b border-gray-200/80 mb-4">
         <button
           type="button"
           onClick={onBackToCategories}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-xs"
+          className="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-2xs"
         >
           <ArrowLeft className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>All Categories</span>
         </button>
 
-        {/* Top Cart Shortcut Pill */}
+        {/* Cart Shortcut Pill */}
         <button
           type="button"
           onClick={() => setCartOpen(true)}
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-bold transition shadow-xs ${
+          className={`h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border text-xs font-bold transition shadow-2xs active:scale-95 ${
             cartCount > 0
               ? 'bg-[#FFBB17] text-gray-950 border-[#FFBB17] hover:bg-[#E5A710]'
               : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
@@ -147,7 +146,7 @@ export default function CategoryDishes({
       {/* Category Title & Stats */}
       <div className="mb-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl sm:text-2xl font-serif font-bold text-gray-900 tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight font-sans">
             {category?.name}
           </h2>
           <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/30">
@@ -155,13 +154,13 @@ export default function CategoryDishes({
           </span>
         </div>
         <p className="text-xs text-gray-500 mt-1 font-sans">
-          Tap any dish to inspect Top & Side views, or tap &ldquo;+ Add&rdquo; to order.
+          Select dishes to add to your order, or tap any dish to view details.
         </p>
       </div>
 
-      {/* Filter and Search Bar */}
+      {/* Search Bar & Dietary Filter Tabs */}
       <div className="space-y-2.5 mb-5">
-        {/* Search */}
+        {/* Search Input */}
         <div className="relative">
           <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
@@ -169,27 +168,27 @@ export default function CategoryDishes({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder={`Search within ${category?.name || 'this category'}...`}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-xs"
+            className="w-full pl-10 pr-14 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-2xs font-sans"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-700 px-1.5 py-0.5 rounded"
             >
               Clear
             </button>
           )}
         </div>
 
-        {/* Dietary Pills (All / Veg / Non-Veg) */}
+        {/* Dietary Pills (All / Veg Only / Non-Veg) */}
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={() => setDietaryFilter('all')}
-            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border transition ${
+            className={`h-8 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
               dietaryFilter === 'all'
-                ? 'bg-gray-900 text-white border-gray-900 shadow-xs'
+                ? 'bg-gray-900 text-white border-gray-900 shadow-2xs'
                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
             }`}
           >
@@ -198,9 +197,9 @@ export default function CategoryDishes({
           <button
             type="button"
             onClick={() => setDietaryFilter('veg')}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition ${
+            className={`h-8 inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
               dietaryFilter === 'veg'
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-400 shadow-xs'
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-400 shadow-2xs'
                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
             }`}
           >
@@ -210,9 +209,9 @@ export default function CategoryDishes({
           <button
             type="button"
             onClick={() => setDietaryFilter('non-veg')}
-            className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold border transition ${
+            className={`h-8 inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
               dietaryFilter === 'non-veg'
-                ? 'bg-rose-50 text-rose-800 border-rose-400 shadow-xs'
+                ? 'bg-rose-50 text-rose-800 border-rose-400 shadow-2xs'
                 : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
             }`}
           >
@@ -224,18 +223,18 @@ export default function CategoryDishes({
 
       {/* Dishes List */}
       {filteredDishes.length === 0 ? (
-        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-xs">
-          <p className="text-xs font-semibold text-gray-600">No dishes match your selection</p>
-          <p className="text-[11px] text-gray-400 mt-1">
+        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-2xs">
+          <p className="text-xs font-semibold text-gray-600 font-sans">No dishes match your selection</p>
+          <p className="text-[11px] text-gray-400 mt-1 font-sans">
             Try resetting your filters or search keywords.
           </p>
         </div>
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {filteredDishes.map((dish, idx) => {
             const isAvailable = dish.isAvailable !== false;
             const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
-            const image = getDishImagePair(dish).sideView;
+            const { imageUrl } = getDishImagePair(dish);
             const key = dish.id || dish._id || dish.name;
             const quantity = cart[key]?.quantity || 0;
 
@@ -251,34 +250,38 @@ export default function CategoryDishes({
                     setSelectedDish(dish);
                   }
                 }}
-                className="group p-3 sm:p-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,187,23,0.12)] hover:border-[#FFBB17]/60 transition-all duration-200 flex items-center gap-3 text-left select-none cursor-pointer"
+                className="group p-3 sm:p-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,187,23,0.12)] hover:border-[#FFBB17]/70 transition-all duration-200 flex items-center justify-between gap-3 text-left select-none cursor-pointer"
               >
-                {/* Dish Thumbnail */}
+                {/* Left: Dish Thumbnail */}
                 <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-200/80">
                   <img
-                    src={image}
+                    src={imageUrl}
                     alt={dish.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-1 left-1 bg-white/90 backdrop-blur-xs rounded-sm p-0.5">
+                  <div className="absolute top-1.5 left-1.5 bg-white/95 backdrop-blur-xs rounded-sm p-0.5 shadow-2xs">
                     <VegBadge isVeg={isVeg} />
                   </div>
                 </div>
 
-                {/* Dish Info */}
-                <div className="flex-1 min-w-0 pr-1">
-                  <h3 className="text-sm font-bold text-gray-900 font-sans tracking-tight truncate group-hover:text-black">
+                {/* Center: Dish Info (Neatly Aligned) */}
+                <div className="flex-1 min-w-0 pr-1 flex flex-col justify-center">
+                  <h3 className="text-sm sm:text-[15px] font-bold text-gray-900 font-sans tracking-tight truncate group-hover:text-amber-950 transition-colors">
                     {dish.name}
                   </h3>
 
-                  {dish.description && (
-                    <p className="text-xs text-gray-500 line-clamp-1 mt-0.5 font-sans">
+                  {dish.description ? (
+                    <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-1 mt-0.5 font-sans leading-relaxed">
                       {dish.description}
+                    </p>
+                  ) : (
+                    <p className="text-[11px] text-gray-400 mt-0.5 font-sans">
+                      Freshly prepared on order
                     </p>
                   )}
 
-                  <div className="mt-2 flex items-center justify-between">
-                    <span className="text-sm font-bold text-gray-900 font-sans">
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <span className="text-sm sm:text-[15px] font-bold text-gray-950 font-sans">
                       {formatPrice(dish.price)}
                     </span>
 
@@ -287,17 +290,12 @@ export default function CategoryDishes({
                         Sold Out
                       </span>
                     )}
-
-                    <span className="text-[10px] font-medium text-amber-700 bg-[#FFF8E7] px-2 py-0.5 rounded-full border border-[#FFBB17]/30 flex items-center gap-0.5 group-hover:bg-[#FFBB17] group-hover:text-gray-950 transition-colors">
-                      <span>Top & Side View</span>
-                      <ChevronRight className="w-3 h-3 stroke-[2.5]" />
-                    </span>
                   </div>
                 </div>
 
-                {/* Add to Cart / Quantity Stepper */}
+                {/* Right: Add to Cart / Quantity Stepper */}
                 <div
-                  className="shrink-0 flex items-center"
+                  className="shrink-0 flex items-center justify-end"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {quantity === 0 ? (
@@ -305,16 +303,16 @@ export default function CategoryDishes({
                       type="button"
                       disabled={!isAvailable}
                       onClick={() => addToCart(dish)}
-                      className="px-3.5 py-1.5 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 font-bold text-xs shadow-xs transition active:scale-95 disabled:bg-gray-200 disabled:text-gray-400"
+                      className="w-20 h-9 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 font-bold text-xs shadow-xs transition active:scale-95 disabled:bg-gray-100 disabled:text-gray-400 flex items-center justify-center font-sans"
                     >
                       + ADD
                     </button>
                   ) : (
-                    <div className="flex items-center gap-1.5 bg-[#FFF8E7] border border-[#FFBB17]/50 rounded-xl p-1 shadow-xs">
+                    <div className="h-9 w-20 flex items-center justify-between bg-[#FFF8E7] border border-[#FFBB17]/70 rounded-xl px-1 shadow-xs">
                       <button
                         type="button"
                         onClick={() => changeQuantity(key, -1)}
-                        className="w-6 h-6 rounded-lg bg-white shadow-xs flex items-center justify-center text-gray-800 hover:bg-gray-100 transition active:scale-90"
+                        className="w-6 h-6 rounded-lg bg-white shadow-2xs flex items-center justify-center text-gray-800 hover:bg-gray-100 transition active:scale-90"
                         aria-label="Decrease quantity"
                       >
                         <Minus className="w-3 h-3 stroke-[2.5]" />
@@ -325,7 +323,7 @@ export default function CategoryDishes({
                       <button
                         type="button"
                         onClick={() => changeQuantity(key, 1)}
-                        className="w-6 h-6 rounded-lg bg-[#FFBB17] text-gray-950 shadow-xs flex items-center justify-center hover:bg-[#E5A710] transition active:scale-90"
+                        className="w-6 h-6 rounded-lg bg-[#FFBB17] text-gray-950 shadow-2xs flex items-center justify-center hover:bg-[#E5A710] transition active:scale-90"
                         aria-label="Increase quantity"
                       >
                         <Plus className="w-3 h-3 stroke-[2.5]" />
@@ -368,7 +366,7 @@ export default function CategoryDishes({
               </div>
             </div>
 
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFBB17] text-gray-950 font-bold text-xs shadow-xs hover:bg-[#E5A710] transition">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFBB17] text-gray-950 font-bold text-xs shadow-xs hover:bg-[#E5A710] transition font-sans">
               <span>View Cart</span>
               <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
             </div>
@@ -376,7 +374,7 @@ export default function CategoryDishes({
         </div>
       )}
 
-      {/* Dish Top View & Side View Detail Modal */}
+      {/* Dish Detail Modal */}
       <DishDetailModal
         dish={selectedDish}
         onClose={() => setSelectedDish(null)}

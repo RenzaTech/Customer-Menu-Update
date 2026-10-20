@@ -112,6 +112,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   title="VIEW MENU"
                   subtitle="Browse categories & freshly prepared dishes"
                   badgeText={`${categories.length} Categories`}
+                  isPrimary={true}
                   onClick={handleOpenMenu}
                 />
 
