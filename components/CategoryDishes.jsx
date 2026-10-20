@@ -1,8 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+<<<<<<< HEAD
 import { ArrowLeft, Search, ChevronRight, ShoppingCart, Plus, Minus, X } from 'lucide-react';
 import DishDetailModal, { getDishImagePair } from './DishDetailModal';
+=======
+import { ArrowLeft, Search, Eye, ChevronRight } from 'lucide-react';
+import DishDetailModal from './DishDetailModal';
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
 
 function VegBadge({ isVeg }) {
   if (isVeg === true || isVeg === 1 || isVeg === 'veg') {
@@ -40,6 +45,7 @@ export default function CategoryDishes({
   const [searchQuery, setSearchQuery] = useState('');
   const [dietaryFilter, setDietaryFilter] = useState('all'); // 'all' | 'veg' | 'non-veg'
   const [selectedDish, setSelectedDish] = useState(null);
+<<<<<<< HEAD
   const [cart, setCart] = useState({});
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -54,6 +60,8 @@ export default function CategoryDishes({
   const cartItems = Object.entries(cart);
   const cartCount = cartItems.reduce((sum, [, item]) => sum + item.quantity, 0);
   const cartTotal = cartItems.reduce((sum, [, item]) => sum + (Number(item.dish.price) || 0) * item.quantity, 0);
+=======
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
 
   const items = useMemo(() => {
     return category?.foodItems || category?.items || [];
@@ -111,6 +119,7 @@ export default function CategoryDishes({
           </span>
         </div>
         <p className="text-xs text-gray-500 mt-1 font-sans">
+<<<<<<< HEAD
           Browse dishes and add your choices to the cart.
         </p>
       </div>
@@ -119,6 +128,12 @@ export default function CategoryDishes({
         <ShoppingCart className="w-4 h-4" /> Cart <span className="rounded-full bg-white px-2 py-0.5 text-xs text-gray-900">{cartCount}</span>
       </button>
 
+=======
+          Tap any dish to view top & side view photos, pricing, and details.
+        </p>
+      </div>
+
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
       {/* Filter and Search Bar */}
       <div className="space-y-2.5 mb-5">
         {/* Search */}
@@ -196,9 +211,12 @@ export default function CategoryDishes({
             const isAvailable = dish.isAvailable !== false;
             const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
 
+<<<<<<< HEAD
             const image = getDishImagePair(dish).sideView;
             const key = dish.id || dish._id || dish.name;
             const quantity = cart[key]?.quantity || 0;
+=======
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
             return (
               <div
                 key={dish.id || dish._id || `${dish.name}-${idx}`}
@@ -211,9 +229,14 @@ export default function CategoryDishes({
                     setSelectedDish(dish);
                   }
                 }}
+<<<<<<< HEAD
                 className="group p-3 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all duration-200 flex items-center gap-3 text-left select-none"
               >
                 <img src={image} alt={dish.name} className="h-20 w-20 shrink-0 rounded-xl object-cover" />
+=======
+                className="group p-4 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:border-gray-300 transition-all duration-200 active:scale-[0.99] flex items-center justify-between gap-3 cursor-pointer text-left select-none"
+              >
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
                 {/* Dish Info */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
@@ -241,12 +264,19 @@ export default function CategoryDishes({
                     )}
 
                     <span className="text-[10px] text-gray-400 font-medium ml-auto flex items-center gap-1 group-hover:text-gray-600 transition-colors">
+<<<<<<< HEAD
                       <span>Details</span>
+=======
+                      <span>Top & Side View</span>
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
                       <ChevronRight className="w-3 h-3 stroke-[2.5]" />
                     </span>
                   </div>
                 </div>
+<<<<<<< HEAD
                 <button type="button" disabled={!isAvailable} onClick={(e) => { e.stopPropagation(); addToCart(dish); }} className="shrink-0 rounded-xl bg-amber-500 px-3 py-2 text-xs font-bold text-white hover:bg-amber-600 disabled:bg-gray-300">{quantity ? `Added ${quantity}` : 'Add'}</button>
+=======
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
               </div>
             );
           })}
@@ -258,6 +288,7 @@ export default function CategoryDishes({
         dish={selectedDish}
         onClose={() => setSelectedDish(null)}
       />
+<<<<<<< HEAD
       {cartOpen && <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center sm:p-4" onClick={() => setCartOpen(false)}>
         <section className="w-full max-w-md rounded-t-3xl bg-white p-5 shadow-2xl sm:rounded-2xl" onClick={(e) => e.stopPropagation()}>
           <div className="mb-4 flex items-center justify-between"><h2 className="text-lg font-bold">Your cart</h2><button onClick={() => setCartOpen(false)} aria-label="Close cart"><X className="h-5 w-5" /></button></div>
@@ -266,6 +297,8 @@ export default function CategoryDishes({
           {cartItems.length > 0 && <p className="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-900">Please call a waiter to take your order.</p>}
         </section>
       </div>}
+=======
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
     </div>
   );
 }

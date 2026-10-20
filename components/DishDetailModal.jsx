@@ -72,7 +72,11 @@ const FOOD_IMAGE_PAIRS = {
   },
 };
 
+<<<<<<< HEAD
 export function getDishImagePair(dish = {}) {
+=======
+function getDishImagePair(dish = {}) {
+>>>>>>> 7044eeac4e7623fa21490389e462adc2c613dc9d
   const name = (dish.name || '').toLowerCase();
   const desc = (dish.description || '').toLowerCase();
   const combined = `${name} ${desc}`;
