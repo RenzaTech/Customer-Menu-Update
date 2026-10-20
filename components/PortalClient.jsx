@@ -138,6 +138,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   onClick={() => setReviewOpen(true)}
                 />
               </main>
+
+              {/* Scanzaa Footer: ONLY on first page (Hub) */}
+              <PortalFooter restaurant={restaurant} />
             </>
           )}
 
@@ -168,9 +171,6 @@ export default function PortalClient({ params, initialView = 'hub' }) {
             />
           )}
         </div>
-
-        {/* Footer */}
-        <PortalFooter restaurant={restaurant} />
       </div>
 
       {/* Google Review Prompt */}

@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Renza — Guest Dining Portal',
-  description: 'Digital restaurant menu and dining hub.',
+  title: 'Scanzaa — Guest Dining Portal',
+  description: 'Digital restaurant menu and dining hub powered by Scanzaa.',
 };
 
 export const viewport = {
