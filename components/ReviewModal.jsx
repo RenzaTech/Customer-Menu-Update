@@ -23,8 +23,8 @@ export default function ReviewModal({ isOpen, onClose, restaurant }) {
         {/* Header */}
         <div className="flex items-center justify-between pb-3 border-b border-gray-100">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200/80 flex items-center justify-center text-amber-600">
-              <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+            <div className="w-9 h-9 rounded-xl bg-[#FFF8E7] border border-[#FFBB17]/40 flex items-center justify-center text-[#92400E]">
+              <Star className="w-4 h-4 fill-[#FFBB17] text-[#FFBB17]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-gray-900 font-sans">
@@ -46,9 +46,9 @@ export default function ReviewModal({ isOpen, onClose, restaurant }) {
 
         {/* Body */}
         <div className="py-6 text-center space-y-3">
-          <div className="flex items-center justify-center gap-1 text-amber-500">
+          <div className="flex items-center justify-center gap-1 text-[#FFBB17]">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-6 h-6 fill-amber-400 text-amber-400" />
+              <Star key={i} className="w-6 h-6 fill-[#FFBB17] text-[#FFBB17]" />
             ))}
           </div>
 
@@ -71,7 +71,7 @@ export default function ReviewModal({ isOpen, onClose, restaurant }) {
             target="_blank"
             rel="noopener noreferrer"
             onClick={onClose}
-            className="flex-1 py-3 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold transition flex items-center justify-center gap-1.5 shadow-sm"
+            className="flex-1 py-3 px-4 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-sm"
           >
             <span>Rate on Google</span>
             <ExternalLink className="w-3.5 h-3.5" />

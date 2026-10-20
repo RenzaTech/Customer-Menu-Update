@@ -87,9 +87,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#eef1f5] sm:py-6 sm:px-4 flex justify-center items-start text-slate-800 font-sans selection:bg-amber-100 selection:text-amber-900">
+    <div className="min-h-screen w-full bg-[#F6F3EC] sm:py-6 sm:px-4 flex justify-center items-start text-slate-900 font-sans selection:bg-[#FFBB17]/30 selection:text-amber-950">
       {/* Mobile Device Viewport Mockup on Desktop, 100% Full-bleed on Mobile */}
-      <div className="w-full max-w-[430px] bg-[#f8f9fa] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_12px_40px_rgba(0,0,0,0.12)] overflow-hidden border-0 sm:border sm:border-gray-200/90 flex flex-col justify-between transition-all">
+      <div className="w-full max-w-[430px] bg-[#FFFDF9] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_12px_40px_rgba(0,0,0,0.08)] overflow-hidden border-0 sm:border sm:border-[#EBE5D8] flex flex-col justify-between transition-all">
         <div className="w-full">
           {/* VIEW 1: Main Dining Hub */}
           {currentView === 'hub' && (
@@ -98,7 +98,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
 
               <main className="w-full px-4 sm:px-5 pt-4 pb-6 space-y-3">
                 <div className="text-center pb-1">
-                  <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-gray-400">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-gray-400">
                     Guest Dining Portal
                   </span>
                 </div>
@@ -106,9 +106,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                 {/* Action Card 1: View Menu */}
                 <ActionCard
                   icon={BookOpen}
-                  iconBgColor="bg-orange-50"
-                  iconColor="text-orange-600"
-                  iconBorderColor="border-orange-200/80"
+                  iconBgColor="bg-[#FFBB17]/20"
+                  iconColor="text-[#92400E]"
+                  iconBorderColor="border-[#FFBB17]/40"
                   title="VIEW MENU"
                   subtitle="Browse categories & freshly prepared dishes"
                   badgeText={`${categories.length} Categories`}
@@ -119,7 +119,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                 <ActionCard
                   icon={MessageSquareHeart}
                   iconBgColor="bg-blue-50"
-                  iconColor="text-blue-600"
+                  iconColor="text-blue-700"
                   iconBorderColor="border-blue-200/80"
                   title="LEAVE ANONYMOUS FEEDBACK"
                   subtitle="Direct & private note to the manager"
@@ -129,9 +129,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                 {/* Action Card 3: Leave a Google Review */}
                 <ActionCard
                   icon={Star}
-                  iconBgColor="bg-amber-50"
-                  iconColor="text-amber-600"
-                  iconBorderColor="border-amber-200/80"
+                  iconBgColor="bg-[#FFF8E7]"
+                  iconColor="text-[#92400E]"
+                  iconBorderColor="border-[#FFBB17]/40"
                   title="LEAVE A GOOGLE REVIEW"
                   subtitle="Rate us 5 stars on Google Maps"
                   onClick={() => setReviewOpen(true)}

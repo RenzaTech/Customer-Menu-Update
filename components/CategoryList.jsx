@@ -5,38 +5,9 @@ import {
   ArrowLeft,
   Search,
   ChevronRight,
-  Utensils,
-  Coffee,
-  IceCream,
-  Sparkles,
   Layers,
-  Pizza,
-  Salad,
-  Flame,
 } from 'lucide-react';
-
-function getCategoryIcon(name = '') {
-  const lower = name.toLowerCase();
-  if (lower.includes('coffee') || lower.includes('tea') || lower.includes('juice') || lower.includes('lassi') || lower.includes('mojito') || lower.includes('shake') || lower.includes('beverage')) {
-    return Coffee;
-  }
-  if (lower.includes('ice cream') || lower.includes('falooda') || lower.includes('dessert')) {
-    return IceCream;
-  }
-  if (lower.includes('salad') || lower.includes('fruit')) {
-    return Salad;
-  }
-  if (lower.includes('special') || lower.includes('combo')) {
-    return Sparkles;
-  }
-  if (lower.includes('pizza') || lower.includes('wrap') || lower.includes('roll')) {
-    return Pizza;
-  }
-  if (lower.includes('momos') || lower.includes('fries') || lower.includes('maggi') || lower.includes('snack')) {
-    return Flame;
-  }
-  return Utensils;
-}
+import CategoryIcon from './CategoryIcon';
 
 export default function CategoryList({
   categories = [],
@@ -49,9 +20,7 @@ export default function CategoryList({
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) return categories;
     const q = searchQuery.toLowerCase();
-    return categories.filter((cat) =>
-      cat.name.toLowerCase().includes(q)
-    );
+    return categories.filter((cat) => cat.name.toLowerCase().includes(q));
   }, [categories, searchQuery]);
 
   return (
@@ -61,13 +30,13 @@ export default function CategoryList({
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-700 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-sm"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-2xs"
         >
           <ArrowLeft className="w-3.5 h-3.5 stroke-[2.5]" />
           <span>Back to Hub</span>
         </button>
 
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 font-sans">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 font-sans">
           Menu Categories
         </span>
       </div>
@@ -78,7 +47,7 @@ export default function CategoryList({
           Explore Our Menu
         </h2>
         <p className="text-xs text-gray-500 mt-1 font-sans">
-          Select a category to view its freshly prepared dishes at {restaurantName || "our cafe"}.
+          Select a category to view its freshly prepared dishes at {restaurantName || 'our cafe'}.
         </p>
       </div>
 
@@ -90,7 +59,7 @@ export default function CategoryList({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search categories (e.g. Snacks, Fresh Juice)..."
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-400 focus:ring-1 focus:ring-gray-400 transition shadow-sm"
+          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-2xs"
         />
         {searchQuery && (
           <button
@@ -105,7 +74,7 @@ export default function CategoryList({
 
       {/* Categories Grid */}
       {filteredCategories.length === 0 ? (
-        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-2xs">
           <Layers className="w-8 h-8 text-gray-300 mx-auto mb-2" />
           <p className="text-xs font-semibold text-gray-600">No categories found</p>
           <p className="text-[11px] text-gray-400 mt-0.5">Try searching for a different item.</p>
@@ -114,32 +83,31 @@ export default function CategoryList({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           {filteredCategories.map((cat, index) => {
             const itemsCount = (cat.foodItems || cat.items || []).length;
-            const Icon = getCategoryIcon(cat.name);
 
             return (
               <button
                 key={cat.id || cat.name || index}
                 type="button"
                 onClick={() => onSelectCategory(cat)}
-                className="group w-full p-3.5 sm:p-4 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.07)] hover:border-gray-300 transition-all duration-200 active:scale-[0.99] flex items-center justify-between text-left"
+                className="group w-full p-3.5 sm:p-4 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,187,23,0.14)] hover:border-[#FFBB17]/70 transition-all duration-200 active:scale-[0.99] flex items-center justify-between text-left"
               >
                 <div className="flex items-center gap-3">
-                  {/* Category icon avatar */}
-                  <div className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-200/80 flex items-center justify-center text-gray-700 shrink-0 group-hover:scale-105 transition-transform">
-                    <Icon className="w-4 h-4 stroke-[2]" />
+                  {/* Category icon avatar with custom vibrant food illustration */}
+                  <div className="w-12 h-12 rounded-2xl bg-[#FFF8E7] border border-[#FFBB17]/40 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:shadow-[0_4px_12px_rgba(255,187,23,0.22)] transition-all duration-200">
+                    <CategoryIcon name={cat.name} className="w-7 h-7" />
                   </div>
 
                   <div>
                     <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-black transition-colors font-sans">
                       {cat.name}
                     </h3>
-                    <span className="text-[11px] text-gray-500 font-sans">
+                    <span className="text-[11px] font-medium text-amber-800 bg-[#FFF8E7] px-2 py-0.2 rounded-full inline-block mt-0.5 border border-[#FFBB17]/25 font-sans">
                       {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
                     </span>
                   </div>
                 </div>
 
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 group-hover:text-gray-700 group-hover:bg-gray-100 transition-colors shrink-0">
+                <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 group-hover:text-gray-900 group-hover:bg-[#FFBB17]/20 transition-colors shrink-0">
                   <ChevronRight className="w-4 h-4 stroke-[2.5]" />
                 </div>
               </button>

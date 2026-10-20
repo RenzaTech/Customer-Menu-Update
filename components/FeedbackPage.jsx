@@ -393,7 +393,7 @@ export default function FeedbackPage({
 
           <button
             type="submit"
-            className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold uppercase tracking-wider transition shadow-sm active:scale-[0.99]"
+            className="w-full py-3.5 px-4 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 text-xs font-bold uppercase tracking-wider transition shadow-sm active:scale-[0.99]"
           >
             Submit Feedback
           </button>
