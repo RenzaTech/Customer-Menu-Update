@@ -108,12 +108,16 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   subtitle="Browse categories & freshly prepared dishes"
                   badgeText={`${categories.length || 16} CATEGORIES`}
                   illustration={
-                    <div className="relative w-15 h-15 sm:w-16 sm:h-16 shrink-0 rounded-full overflow-hidden border-2 border-white shadow-md">
-                      <img
-                        src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=260&q=80"
-                        alt="View menu dishes"
-                        className="w-full h-full object-cover scale-110"
-                      />
+                    <div className="relative w-16 h-16 sm:w-18 sm:h-18 shrink-0 flex items-center justify-center -mr-2 sm:-mr-1 select-none">
+                      {/* Sparkle */}
+                      <span className="absolute -top-1 left-0 text-amber-400 text-xs">✦</span>
+                      <div className="w-15 h-15 sm:w-17 sm:h-17 rounded-full overflow-hidden border-2 border-white shadow-md">
+                        <img
+                          src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=300&q=80"
+                          alt="View menu dishes"
+                          className="w-full h-full object-cover scale-110"
+                        />
+                      </div>
                     </div>
                   }
                   onClick={handleOpenMenu}
@@ -126,10 +130,10 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   title="Leave Anonymous Feedback"
                   subtitle="Direct & private note to the manager"
                   illustration={
-                    <div className="relative w-14 h-14 sm:w-15 sm:h-15 shrink-0 flex items-center justify-center select-none">
+                    <div className="relative w-15 h-15 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center -mr-2 sm:-mr-1 select-none">
                       <span className="absolute -top-1 left-1 text-amber-400 text-xs">✦</span>
                       <span className="absolute top-1 right-0 text-blue-400 text-[10px]">✨</span>
-                      <svg className="w-12 h-12 drop-shadow-md -rotate-6" viewBox="0 0 64 64" fill="none">
+                      <svg className="w-13 h-13 drop-shadow-md -rotate-6" viewBox="0 0 64 64" fill="none">
                         <rect x="12" y="8" width="38" height="48" rx="4" fill="#FFFFFF" stroke="#CBD5E1" strokeWidth="1.5" />
                         <rect x="23" y="5" width="16" height="6" rx="2" fill="#94A3B8" />
                         <line x1="18" y1="20" x2="44" y2="20" stroke="#E2E8F0" strokeWidth="2" strokeLinecap="round" />
@@ -154,12 +158,12 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   icon={Star}
                   variant="green"
                   title="Leave a Google Review"
-                  subtitle="Rate us on Google Maps"
+                  subtitle="Rate us 5 stars on Google Maps"
                   illustration={
-                    <div className="relative w-14 h-14 sm:w-15 sm:h-15 shrink-0 flex items-center justify-center select-none">
+                    <div className="relative w-15 h-15 sm:w-16 sm:h-16 shrink-0 flex items-center justify-center -mr-2 sm:-mr-1 select-none">
                       <span className="absolute -top-1 left-1 text-amber-400 text-xs">✦</span>
                       <span className="absolute bottom-1 right-0 text-amber-400 text-[10px]">✨</span>
-                      <svg className="w-12 h-12 drop-shadow-md" viewBox="0 0 64 64" fill="none">
+                      <svg className="w-13 h-13 drop-shadow-md" viewBox="0 0 64 64" fill="none">
                         <ellipse cx="32" cy="52" rx="14" ry="5" fill="#E2E8F0" />
                         <g transform="translate(18, 12)">
                           <path
