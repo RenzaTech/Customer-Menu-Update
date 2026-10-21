@@ -25,9 +25,9 @@ export default function CategoryList({
   }, [categories, searchQuery]);
 
   return (
-    <div className="w-full px-4 pt-3 pb-12 animate-in fade-in duration-200 selection:bg-[#FFBB17]/30">
+    <div className="relative w-full px-4 pt-3 pb-0 animate-in fade-in duration-200 selection:bg-[#FFBB17]/30 overflow-hidden">
       {/* 1. Header: Back to Hub + MENU CATEGORIES */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-[#E8EAF0] mb-4">
+      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-[#E8EAF0] mb-3.5">
         <button
           type="button"
           onClick={onBack}
@@ -42,40 +42,51 @@ export default function CategoryList({
         </span>
       </div>
 
+      {/* Top-Right Culinary Ingredients Illustration (Basil, Tomatoes, Pepper bowl) */}
+      <div className="absolute top-8 -right-1 w-28 sm:w-32 pointer-events-none select-none z-0">
+        <img
+          src="/categories/top-culinary-art.png"
+          alt="Culinary ingredients"
+          className="w-full h-auto object-contain opacity-95"
+        />
+      </div>
+
       {/* 2. Page Heading & Subtitle */}
-      <div className="mb-4">
+      <div className="relative z-10 mb-3.5 pr-20">
         <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#182238] leading-tight">
           Explore Our Menu
         </h1>
-        <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1.5 leading-relaxed font-normal">
+        <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1 leading-relaxed font-normal">
           Select a category to view its freshly prepared dishes at {restaurantName || "Anbu'de Cafe"}.
         </p>
       </div>
 
-      {/* 3. Search Bar */}
-      <div className="relative mb-4">
-        <Search className="w-4 h-4 text-[#9AA3B2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search categories (e.g. Snacks, Fresh Juice)..."
-          className="w-full h-[46px] pl-10 pr-9 bg-white border border-[#E8EAF0] rounded-2xl text-xs sm:text-[13px] text-[#182238] placeholder-[#9AA3B2] focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-[0_1px_4px_rgba(24,34,56,0.03)]"
-        />
-        {searchQuery && (
-          <button
-            type="button"
-            onClick={() => setSearchQuery('')}
-            className="w-6 h-6 rounded-full flex items-center justify-center absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9AA3B2] hover:text-[#182238] hover:bg-[#FFF5D9] transition"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-        )}
+      {/* 3. Search Bar with Signature Gold Border */}
+      <div className="relative z-10 mb-4">
+        <div className="relative w-full h-[46px] rounded-2xl bg-white border-2 border-[#FFE082] focus-within:border-[#FFBB17] shadow-[0_2px_8px_rgba(255,187,23,0.08)] transition flex items-center">
+          <Search className="w-4 h-4 text-[#9AA3B2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search categories (e.g. Snacks, Fresh Juice)..."
+            className="w-full h-full pl-10 pr-9 bg-transparent rounded-2xl text-xs sm:text-[13px] text-[#182238] placeholder-[#9AA3B2] focus:outline-none"
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              onClick={() => setSearchQuery('')}
+              className="w-6 h-6 rounded-full flex items-center justify-center absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9AA3B2] hover:text-[#182238] hover:bg-[#FFF5D9] transition"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* 4. Category Cards (Strict 2-Column Mobile Grid) */}
       {filteredCategories.length === 0 ? (
-        <div className="py-12 text-center bg-white border border-[#E8EAF0] rounded-2xl p-6 shadow-[0_2px_8px_rgba(24,34,56,0.04)]">
+        <div className="relative z-10 py-12 text-center bg-white border border-[#E8EAF0] rounded-2xl p-6 shadow-[0_2px_8px_rgba(24,34,56,0.04)]">
           <Layers className="w-8 h-8 text-[#9AA3B2] mx-auto mb-2 opacity-60" />
           <p className="text-xs font-semibold text-[#182238]">No categories found</p>
           <p className="text-[11px] text-[#737D8D] mt-0.5">Try searching for a different item.</p>
@@ -88,7 +99,7 @@ export default function CategoryList({
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
+        <div className="relative z-10 grid grid-cols-2 gap-2.5 sm:gap-3">
           {filteredCategories.map((cat, index) => {
             const itemsCount = (cat.foodItems || cat.items || []).length;
 
@@ -97,13 +108,13 @@ export default function CategoryList({
                 key={cat.id || cat.name || index}
                 type="button"
                 onClick={() => onSelectCategory(cat)}
-                className="group w-full p-2.5 min-[380px]:p-3 min-h-[72px] min-[380px]:min-h-[76px] bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_6px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.12)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between text-left"
+                className="group w-full p-2 min-[380px]:p-2.5 min-h-[72px] min-[380px]:min-h-[76px] bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_8px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.14)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between text-left"
               >
-                {/* Left: 48-52px Food Icon Container in Pale Gold */}
-                <div className="w-11 h-11 min-[380px]:w-12 min-[380px]:h-12 rounded-2xl bg-[#FFF5D9] border border-[#FFE3A0] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
+                {/* Left: 48-52px Food Icon Container in Pale Gold with 3D Dish Illustration */}
+                <div className="w-12 h-12 min-[380px]:w-[50px] min-[380px]:h-[50px] rounded-2xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FFF6E3] border border-[#FFE3A0]/60 group-hover:scale-105 transition-transform duration-200">
                   <CategoryIcon
                     name={cat.name}
-                    className="w-6 h-6 min-[380px]:w-7 min-[380px]:h-7"
+                    className="w-full h-full object-cover"
                   />
                 </div>
 
@@ -113,7 +124,7 @@ export default function CategoryList({
                     {cat.name}
                   </h3>
                   <div className="mt-1">
-                    <span className="inline-flex items-center px-1.5 min-[380px]:px-2 py-0.5 rounded-full bg-[#FFF5D9] border border-[#FFE3A0]/70 text-[9.5px] min-[380px]:text-[10.5px] font-semibold text-[#8A5700] whitespace-nowrap">
+                    <span className="inline-flex items-center px-1.5 min-[380px]:px-2 py-0.5 rounded-full bg-[#FFF6E3] border border-[#FFE3A0]/70 text-[9.5px] min-[380px]:text-[10px] font-semibold text-[#A16207] whitespace-nowrap">
                       {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
                     </span>
                   </div>
@@ -126,6 +137,15 @@ export default function CategoryList({
           })}
         </div>
       )}
+
+      {/* 5. Bottom Decorative Waves & Botanical Leaves */}
+      <div className="relative -mx-4 mt-6 select-none pointer-events-none overflow-hidden">
+        <img
+          src="/categories/bottom-waves-leaves.png"
+          alt="Decorative leaves and golden waves"
+          className="w-full h-auto object-cover block"
+        />
+      </div>
     </div>
   );
 }
