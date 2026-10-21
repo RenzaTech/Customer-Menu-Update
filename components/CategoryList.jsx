@@ -6,6 +6,7 @@ import {
   Search,
   ChevronRight,
   Layers,
+  X,
 } from 'lucide-react';
 import CategoryIcon from './CategoryIcon';
 
@@ -24,63 +25,70 @@ export default function CategoryList({
   }, [categories, searchQuery]);
 
   return (
-    <div className="w-full max-w-lg mx-auto px-4 sm:px-6 py-4 animate-in fade-in duration-200">
-      {/* Top Navigation Bar */}
-      <div className="flex items-center justify-between pb-4 border-b border-gray-200/80 mb-5">
+    <div className="w-full px-4 pt-3 pb-12 animate-in fade-in duration-200 selection:bg-[#FFBB17]/30">
+      {/* 1. Header: Back to Hub + MENU CATEGORIES */}
+      <div className="flex items-center justify-between pb-3.5 border-b border-[#E8EAF0] mb-4">
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-2xs"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#E8EAF0] bg-white text-[#182238] text-xs font-semibold shadow-[0_1px_3px_rgba(24,34,56,0.04)] hover:bg-[#FFF5D9]/40 active:scale-95 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5 stroke-[2.5]" />
+          <ArrowLeft className="w-3.5 h-3.5 text-[#182238] stroke-[2.2]" />
           <span>Back to Hub</span>
         </button>
 
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400 font-sans">
-          Menu Categories
+        <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#9AA3B2] font-sans">
+          MENU CATEGORIES
         </span>
       </div>
 
-      {/* Title & Restaurant Info */}
+      {/* 2. Page Heading & Subtitle */}
       <div className="mb-4">
-        <h2 className="text-xl sm:text-2xl font-serif font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#182238] leading-tight">
           Explore Our Menu
-        </h2>
-        <p className="text-xs text-gray-500 mt-1 font-sans">
-          Select a category to view its freshly prepared dishes at {restaurantName || 'our cafe'}.
+        </h1>
+        <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1.5 leading-relaxed font-normal">
+          Select a category to view its freshly prepared dishes at {restaurantName || "Anbu'de Cafe"}.
         </p>
       </div>
 
-      {/* Category Search Bar */}
-      <div className="relative mb-5">
-        <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+      {/* 3. Search Bar */}
+      <div className="relative mb-4">
+        <Search className="w-4 h-4 text-[#9AA3B2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search categories (e.g. Snacks, Fresh Juice)..."
-          className="w-full pl-10 pr-4 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-2xs"
+          className="w-full h-[46px] pl-10 pr-9 bg-white border border-[#E8EAF0] rounded-2xl text-xs sm:text-[13px] text-[#182238] placeholder-[#9AA3B2] focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-[0_1px_4px_rgba(24,34,56,0.03)]"
         />
         {searchQuery && (
           <button
             type="button"
             onClick={() => setSearchQuery('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-600"
+            className="w-6 h-6 rounded-full flex items-center justify-center absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9AA3B2] hover:text-[#182238] hover:bg-[#FFF5D9] transition"
           >
-            Clear
+            <X className="w-3.5 h-3.5" />
           </button>
         )}
       </div>
 
-      {/* Categories Grid */}
+      {/* 4. Category Cards (Strict 2-Column Mobile Grid) */}
       {filteredCategories.length === 0 ? (
-        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-2xs">
-          <Layers className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-          <p className="text-xs font-semibold text-gray-600">No categories found</p>
-          <p className="text-[11px] text-gray-400 mt-0.5">Try searching for a different item.</p>
+        <div className="py-12 text-center bg-white border border-[#E8EAF0] rounded-2xl p-6 shadow-[0_2px_8px_rgba(24,34,56,0.04)]">
+          <Layers className="w-8 h-8 text-[#9AA3B2] mx-auto mb-2 opacity-60" />
+          <p className="text-xs font-semibold text-[#182238]">No categories found</p>
+          <p className="text-[11px] text-[#737D8D] mt-0.5">Try searching for a different item.</p>
+          <button
+            type="button"
+            onClick={() => setSearchQuery('')}
+            className="mt-3 px-3 py-1 bg-[#FFF5D9] text-[#8A5700] text-xs font-semibold rounded-lg hover:bg-[#FFE3A0] transition"
+          >
+            Clear Search
+          </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-3">
           {filteredCategories.map((cat, index) => {
             const itemsCount = (cat.foodItems || cat.items || []).length;
 
@@ -89,27 +97,30 @@ export default function CategoryList({
                 key={cat.id || cat.name || index}
                 type="button"
                 onClick={() => onSelectCategory(cat)}
-                className="group w-full p-3.5 sm:p-4 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,187,23,0.14)] hover:border-[#FFBB17]/70 transition-all duration-200 active:scale-[0.99] flex items-center justify-between text-left"
+                className="group w-full p-2.5 min-[380px]:p-3 min-h-[72px] min-[380px]:min-h-[76px] bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_6px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.12)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between text-left"
               >
-                <div className="flex items-center gap-3">
-                  {/* Category icon avatar with custom vibrant food illustration */}
-                  <div className="w-12 h-12 rounded-2xl bg-[#FFF8E7] border border-[#FFBB17]/40 flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:shadow-[0_4px_12px_rgba(255,187,23,0.22)] transition-all duration-200">
-                    <CategoryIcon name={cat.name} className="w-7 h-7" />
-                  </div>
+                {/* Left: 48-52px Food Icon Container in Pale Gold */}
+                <div className="w-11 h-11 min-[380px]:w-12 min-[380px]:h-12 rounded-2xl bg-[#FFF5D9] border border-[#FFE3A0] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform duration-200">
+                  <CategoryIcon
+                    name={cat.name}
+                    className="w-6 h-6 min-[380px]:w-7 min-[380px]:h-7"
+                  />
+                </div>
 
-                  <div>
-                    <h3 className="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-black transition-colors font-sans">
-                      {cat.name}
-                    </h3>
-                    <span className="text-[11px] font-medium text-amber-800 bg-[#FFF8E7] px-2 py-0.2 rounded-full inline-block mt-0.5 border border-[#FFBB17]/25 font-sans">
+                {/* Middle: Category Title & Item Count Badge */}
+                <div className="flex-1 min-w-0 px-2 min-[380px]:px-2.5">
+                  <h3 className="text-xs min-[380px]:text-[13px] font-bold text-[#182238] leading-tight line-clamp-2 font-sans group-hover:text-black">
+                    {cat.name}
+                  </h3>
+                  <div className="mt-1">
+                    <span className="inline-flex items-center px-1.5 min-[380px]:px-2 py-0.5 rounded-full bg-[#FFF5D9] border border-[#FFE3A0]/70 text-[9.5px] min-[380px]:text-[10.5px] font-semibold text-[#8A5700] whitespace-nowrap">
                       {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
                     </span>
                   </div>
                 </div>
 
-                <div className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 group-hover:text-gray-900 group-hover:bg-[#FFBB17]/20 transition-colors shrink-0">
-                  <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-                </div>
+                {/* Right: Small chevron */}
+                <ChevronRight className="w-3.5 h-3.5 text-[#9AA3B2] group-hover:text-[#182238] shrink-0 stroke-[2.2] transition-colors" />
               </button>
             );
           })}
