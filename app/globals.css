@@ -5,12 +5,19 @@
 @tailwind utilities;
 
 :root {
-  --brand: #FFBB17;
-  --brand-hover: #E5A710;
+  --brand: #FFB800;
+  --brand-hover: #E5A500;
   --brand-light: #FFF8E1;
-  --canvas: #FFFDF9;
+  --coffee: #8B4513;
+  --canvas: #FFFCF7;
   --surface: #FFFFFF;
-  --ink: #0F172A;
+  --ink: #101B35;
+  --ink-secondary: #718096;
+  --success: #16B86A;
+  --feedback-blue: #2878FF;
+  --soft-green: #F0FFF6;
+  --soft-blue: #F3F7FF;
+  --border-subtle: #E8EAF0;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-h: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -24,14 +31,14 @@
 html {
   font-size: 16px;
   scroll-behavior: smooth;
-  background-color: #FFFDF9;
+  background-color: #FFFCF7;
   color-scheme: light;
 }
 
 body {
   font-family: var(--font-sans);
-  background-color: #FFFDF9;
-  color: #0F172A;
+  background-color: #FFFCF7;
+  color: #101B35;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;

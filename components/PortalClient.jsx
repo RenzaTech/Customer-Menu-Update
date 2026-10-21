@@ -90,9 +90,9 @@ export default function PortalClient({ params, initialView = 'hub' }) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F6F3EC] sm:py-6 sm:px-4 flex justify-center items-start text-slate-900 font-sans selection:bg-[#FFBB17]/30 selection:text-amber-950">
+    <div className="min-h-screen w-full bg-[#F6F3EC] sm:py-6 sm:px-4 flex justify-center items-start text-[#101B35] font-sans selection:bg-[#FFB800]/30 selection:text-amber-950">
       {/* Mobile Device Viewport Mockup on Desktop, 100% Full-bleed on Mobile */}
-      <div className="w-full max-w-[430px] bg-[#FFFDF9] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_12px_40px_rgba(0,0,0,0.08)] overflow-hidden border-0 sm:border sm:border-[#EBE5D8] flex flex-col justify-between transition-all">
+      <div className="w-full max-w-[430px] bg-[#FFFCF7] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_16px_50px_rgba(0,0,0,0.08)] overflow-hidden border-0 sm:border sm:border-[#E8EAF0] flex flex-col justify-between transition-all">
         <div className="w-full">
           {/* VIEW 1: Main Dining Hub */}
           {currentView === 'hub' && (
@@ -154,7 +154,7 @@ export default function PortalClient({ params, initialView = 'hub' }) {
                   icon={Star}
                   variant="green"
                   title="Leave a Google Review"
-                  subtitle="Rate us 5 stars on Google Maps"
+                  subtitle="Rate us on Google Maps"
                   illustration={
                     <div className="relative w-14 h-14 sm:w-15 sm:h-15 shrink-0 flex items-center justify-center select-none">
                       <span className="absolute -top-1 left-1 text-amber-400 text-xs">✦</span>

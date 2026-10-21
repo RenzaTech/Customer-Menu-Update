@@ -12,25 +12,25 @@ export default function ActionCard({
   onClick,
   href,
 }) {
-  // Variant color definitions matching the mockup precisely
+  // Variant styles matching specification exactly
   const variantStyles = {
     yellow: {
-      card: 'border-2 border-[#FCD34D] bg-[#FFFDF7] shadow-[0_4px_18px_rgba(252,211,77,0.16)] hover:shadow-[0_8px_26px_rgba(252,211,77,0.26)] hover:border-[#F59E0B]',
-      iconBox: 'bg-[#FEF3C7] border border-[#FDE68A] text-[#D97706]',
+      card: 'border-2 border-[#FFB800] bg-[#FFFCF7] shadow-[0_4px_20px_rgba(255,184,0,0.16)] hover:shadow-[0_8px_28px_rgba(255,184,0,0.25)] hover:border-[#E5A500]',
+      iconBox: 'bg-[#FEF3C7] border border-[#FDE68A] text-[#8B4513]',
       badge: 'bg-[#DCFCE7] text-[#15803D] border border-emerald-300',
-      chevron: 'bg-[#FFBB17] text-gray-950',
+      chevron: 'bg-[#FFB800] text-[#101B35]',
     },
     blue: {
-      card: 'border-2 border-[#BFDBFE] bg-[#F8FAFC] shadow-[0_4px_18px_rgba(191,219,254,0.18)] hover:shadow-[0_8px_26px_rgba(191,219,254,0.28)] hover:border-[#60A5FA]',
-      iconBox: 'bg-[#DBEAFE] border border-blue-200 text-[#2563EB]',
+      card: 'border-2 border-[#BFDBFE] bg-[#F3F7FF] shadow-[0_4px_20px_rgba(40,120,255,0.12)] hover:shadow-[0_8px_28px_rgba(40,120,255,0.22)] hover:border-[#60A5FA]',
+      iconBox: 'bg-[#DBEAFE] border border-blue-200 text-[#2878FF]',
       badge: 'bg-blue-100 text-blue-800 border border-blue-300',
-      chevron: 'bg-[#DBEAFE] text-blue-600',
+      chevron: 'bg-[#DBEAFE] text-[#2878FF]',
     },
     green: {
-      card: 'border-2 border-[#BBF7D0] bg-[#F0FDF4] shadow-[0_4px_18px_rgba(187,247,208,0.18)] hover:shadow-[0_8px_26px_rgba(187,247,208,0.28)] hover:border-[#4ADE80]',
-      iconBox: 'bg-[#DCFCE7] border border-emerald-200 text-[#16A34A]',
+      card: 'border-2 border-[#BBF7D0] bg-[#F0FFF6] shadow-[0_4px_20px_rgba(22,184,106,0.12)] hover:shadow-[0_8px_28px_rgba(22,184,106,0.22)] hover:border-[#4ADE80]',
+      iconBox: 'bg-[#DCFCE7] border border-emerald-200 text-[#16B86A]',
       badge: 'bg-emerald-100 text-emerald-800 border border-emerald-300',
-      chevron: 'bg-[#DCFCE7] text-emerald-700',
+      chevron: 'bg-[#DCFCE7] text-[#16B86A]',
     },
   };
 
@@ -42,7 +42,7 @@ export default function ActionCard({
     >
       {/* Left: Icon & Text Details */}
       <div className="flex items-center gap-3 sm:gap-3.5 flex-1 min-w-0 pr-1 z-10">
-        {/* Rounded square icon box */}
+        {/* Rounded square container for icon */}
         <div
           className={`w-12 h-12 sm:w-13 sm:h-13 rounded-2xl flex items-center justify-center shrink-0 border transition-transform duration-200 group-hover:scale-105 ${style.iconBox}`}
         >
@@ -52,35 +52,35 @@ export default function ActionCard({
         {/* Text Details */}
         <div className="flex flex-col text-left min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[14px] sm:text-[15px] font-extrabold text-gray-950 font-sans tracking-tight">
+            <span className="text-[15px] sm:text-[16px] font-extrabold text-[#101B35] font-sans tracking-tight">
               {title}
             </span>
             {badgeText && (
               <span
-                className={`px-2 py-0.5 text-[9px] font-black rounded-full border uppercase tracking-wider ${style.badge}`}
+                className={`px-2.5 py-0.5 text-[9px] font-black rounded-full border uppercase tracking-wider ${style.badge}`}
               >
                 {badgeText}
               </span>
             )}
           </div>
           {subtitle && (
-            <span className="text-[11.5px] sm:text-xs text-gray-500 font-medium font-sans mt-0.5 line-clamp-1">
+            <span className="text-[11.5px] sm:text-xs text-[#718096] font-medium font-sans mt-0.5 line-clamp-1">
               {subtitle}
             </span>
           )}
         </div>
       </div>
 
-      {/* Right: Circular Chevron Action & Optional Realistic Illustration Sticker */}
+      {/* Right: Circular Action Arrow & Decorative Right Illustration */}
       <div className="flex items-center gap-2 shrink-0 z-10">
-        {/* Circular Chevron Button */}
+        {/* Circular Action Arrow Button */}
         <div
           className={`w-8 h-8 rounded-full flex items-center justify-center font-bold shadow-xs transition-transform duration-200 group-hover:scale-110 shrink-0 ${style.chevron}`}
         >
           <ChevronRight className="w-4 h-4 stroke-[3]" />
         </div>
 
-        {/* Illustration Sticker (Food bowl, Notepad, or Google Maps pin) */}
+        {/* Illustration: Food Bowl, Notepad, or Google Maps Pin */}
         {illustration && (
           <div className="shrink-0 -mr-2 sm:-mr-1 flex items-center justify-center">
             {illustration}
@@ -96,7 +96,7 @@ export default function ActionCard({
         href={href}
         target={href.startsWith('http') ? '_blank' : '_self'}
         rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className="block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFBB17] rounded-[26px]"
+        className="block w-full focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] rounded-[26px]"
       >
         {content}
       </a>
@@ -107,7 +107,7 @@ export default function ActionCard({
     <button
       type="button"
       onClick={onClick}
-      className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFBB17] rounded-[26px]"
+      className="block w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFB800] rounded-[26px]"
     >
       {content}
     </button>
