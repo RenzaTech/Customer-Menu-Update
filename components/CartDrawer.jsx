@@ -94,8 +94,8 @@ export default function CartDrawer({
                   {totalItemCount} {totalItemCount === 1 ? 'item' : 'items'}
                 </span>
               </div>
-              <p className="text-[11px] text-gray-500 font-sans mt-0.5">
-                Dine-in Order • {tableNumber}
+              <p className="text-[11px] text-gray-500 font-sans mt-0.5 font-bold">
+                {tableNumber}
               </p>
             </div>
           </div>
