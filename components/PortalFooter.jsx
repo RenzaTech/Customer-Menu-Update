@@ -63,7 +63,7 @@ export default function PortalFooter({ restaurant }) {
       </p>
 
       {/* Bottom Botanical Leaves & Warm Golden Wave */}
-      <div className="relative w-full select-none pointer-events-none mt-1">
+      <div className="relative w-full select-none pointer-events-none mt-1 -mb-1 overflow-hidden">
         <img
           src="/categories/bottom-waves-leaves.png"
           alt="Decorative leaves and golden waves"

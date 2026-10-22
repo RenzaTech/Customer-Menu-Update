@@ -21,82 +21,73 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
     restaurant?.description ||
     'A cozy place to enjoy great coffee, freshly prepared food and a relaxing atmosphere.';
 
-  // Separate Cover Photo: uses restaurant coverImage from backend/admin or default cafe cover
-  const coverImage =
-    restaurant?.coverImage ||
-    '/hub/default-cafe-cover.jpg';
+  // Check if admin uploaded a custom cover image or logo
+  const hasCustomCover = Boolean(restaurant?.coverImage && !restaurant.coverImage.includes('default-cafe-cover'));
+  const hasCustomLogo = Boolean(restaurant?.logoUrl && !restaurant.logoUrl.includes('anbu-cafe-logo'));
 
-  // Separate Logo: uses restaurant logoUrl from backend/admin or default circular Anbu Cafe logo
-  const logoUrl =
-    restaurant?.logoUrl ||
-    '/hub/anbu-cafe-logo.png';
-
+  const coverImage = restaurant?.coverImage || '/hub/default-cafe-cover.jpg';
+  const logoUrl = restaurant?.logoUrl || '/hub/anbu-cafe-logo.png';
   const isVerified = restaurant?.isVerified !== false;
 
   return (
     <header className="relative w-full bg-[#FFFCF7] pb-2">
-      {/* 1. SEPARATE Cover Photo Slot with Seamless Scalloped Wave Cutout */}
-      <div
-        className="relative w-full h-[240px] sm:h-[265px] overflow-hidden rounded-t-[28px] bg-[#1a1510]"
-        style={{ height: '240px', width: '100%', position: 'relative', overflow: 'hidden' }}
-      >
-        <img
-          src={coverImage}
-          alt={`${name} cover`}
-          className="w-full h-full object-cover object-center scale-102"
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-        {/* Soft warm vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none" />
+      {/* 1. Header Banner / Cover Section */}
+      {!hasCustomCover ? (
+        /* Default State: Master Ultra-High-Resolution Header Artwork (1500x828 Retina) */
+        <div className="relative w-full overflow-hidden rounded-t-[28px] bg-[#1a1510] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+          <img
+            src="/hub/hub-cover-logo.png"
+            alt={`${name} cover`}
+            className="w-full h-auto object-cover block select-none"
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+          />
 
-        {/* Seamless Scalloped Wave Cutout (fused to -bottom-1 with zero gap) */}
-        <svg
-          viewBox="0 0 500 100"
-          preserveAspectRatio="none"
-          className="absolute -bottom-1 left-0 w-full h-16 sm:h-20 text-[#FFFCF7] fill-current pointer-events-none block z-0"
-        >
-          <path d="M0,50 C100,80 160,28 250,52 C340,76 400,28 500,48 L500,105 L0,105 Z" />
-        </svg>
-      </div>
-
-      {/* 2. Restaurant Logo & Profile Information Container */}
-      <div className="relative max-w-sm mx-auto px-4 -mt-[62px] sm:-mt-[68px] flex flex-col items-center text-center z-10">
-        {/* Center Circular Logo with Botanical Leaves & Coffee Beans Anchored Directly to Logo */}
-        <div className="relative flex items-center justify-center">
-          {/* Left Decorative Botanical Leaves & Coffee Beans (Realistic 3D Artwork) */}
-          <div className="absolute right-[78px] sm:right-[86px] top-1/2 -translate-y-1/2 w-[140px] sm:w-[155px] pointer-events-none select-none z-10">
+          {/* If admin uploaded a custom logo, overlay it seamlessly in the center circular logo slot */}
+          {hasCustomLogo && (
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[2%] w-[27%] aspect-square rounded-full bg-white p-1 shadow-[0_8px_24px_rgba(255,184,0,0.25)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden z-20">
+              <img
+                src={logoUrl}
+                alt={name}
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
+          )}
+        </div>
+      ) : (
+        /* Custom Admin-Uploaded Cover State */
+        <div className="relative w-full">
+          <div className="relative w-full h-[220px] sm:h-[240px] overflow-hidden rounded-t-[28px] bg-[#1a1510]">
             <img
-              src="/hub/realistic-leaves-left.png"
-              alt="Decorative leaves and coffee beans"
-              className="w-full h-auto object-contain block drop-shadow-xs"
+              src={coverImage}
+              alt={`${name} cover`}
+              className="w-full h-full object-cover object-center"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none" />
+            <svg
+              viewBox="0 0 500 80"
+              preserveAspectRatio="none"
+              className="absolute -bottom-1 left-0 w-full h-14 sm:h-16 text-[#FFFCF7] fill-current pointer-events-none block z-0"
+            >
+              <path d="M0,45 C100,75 160,25 250,55 C340,85 400,35 500,50 L500,85 L0,85 Z" />
+            </svg>
           </div>
 
-          {/* Center SEPARATE Circular Logo Container (Displays admin-uploaded logo or default Anbu logo) */}
-          <div
-            className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-4 sm:ring-5 ring-[#FEF3C7] transition-transform duration-200 hover:scale-102 w-[122px] h-[122px] sm:w-[130px] sm:h-[130px] z-20"
-            style={{ width: '122px', height: '122px', borderRadius: '9999px', overflow: 'hidden' }}
-          >
-            <img
-              src={logoUrl}
-              alt={name}
-              className="w-full h-full object-cover rounded-full"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '9999px' }}
-            />
-          </div>
-
-          {/* Right Decorative Botanical Leaves & Coffee Beans (Realistic 3D Artwork) */}
-          <div className="absolute left-[78px] sm:left-[86px] top-1/2 -translate-y-1/2 w-[140px] sm:w-[155px] pointer-events-none select-none z-10">
-            <img
-              src="/hub/realistic-leaves-right.png"
-              alt="Decorative leaves and coffee beans"
-              className="w-full h-auto object-contain block drop-shadow-xs"
-            />
+          <div className="relative max-w-sm mx-auto px-4 -mt-[56px] flex flex-col items-center text-center z-10">
+            <div className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-4 ring-[#FEF3C7] w-[120px] h-[120px] z-20">
+              <img
+                src={logoUrl}
+                alt={name}
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           </div>
         </div>
+      )}
 
+      {/* 2. Restaurant Profile Information Container */}
+      <div className="relative max-w-sm mx-auto px-4 pt-1 sm:pt-2 flex flex-col items-center text-center z-10">
         {/* Restaurant Name: Bold Typography + Golden Verified Checkmark */}
-        <div className="mt-3.5 flex items-center justify-center gap-1.5">
+        <div className="mt-1 flex items-center justify-center gap-1.5">
           <h1 className="text-[27px] sm:text-[30px] font-black tracking-tight text-[#101B35] font-sans leading-tight">
             {name}
           </h1>

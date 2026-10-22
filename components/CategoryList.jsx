@@ -43,11 +43,11 @@ export default function CategoryList({
       </div>
 
       {/* Top-Right Culinary Ingredients Illustration (Basil, Tomatoes, Pepper bowl) */}
-      <div className="absolute top-8 -right-1 w-28 sm:w-32 pointer-events-none select-none z-0">
+      <div className="absolute top-6 right-0 w-28 sm:w-32 pointer-events-none select-none z-0 overflow-hidden">
         <img
           src="/categories/top-culinary-art.png"
           alt="Culinary ingredients"
-          className="w-full h-auto object-contain opacity-95"
+          className="w-full h-auto object-contain block opacity-95"
         />
       </div>
 
