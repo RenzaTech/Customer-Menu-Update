@@ -37,33 +37,33 @@ export default function ActionCard({
 
   const content = (
     <div
-      className={`group relative flex items-center justify-between p-3 sm:p-3.5 rounded-[24px] transition-all duration-200 active:scale-[0.98] cursor-pointer overflow-hidden ${style.card}`}
+      className={`group relative flex items-center justify-between p-2.5 min-[360px]:p-3 sm:p-3.5 rounded-[22px] min-[360px]:rounded-[24px] transition-all duration-200 active:scale-[0.98] cursor-pointer overflow-hidden ${style.card}`}
     >
       {/* Left: Icon & Text Details */}
-      <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0 pr-1 z-10">
+      <div className="flex items-center gap-2 sm:gap-2.5 flex-1 min-w-0 pr-1 z-10">
         {/* Rounded square container for icon */}
         <div
-          className={`w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0 border transition-transform duration-200 group-hover:scale-105 ${style.iconBox}`}
+          className={`w-10 h-10 min-[360px]:w-11 min-[360px]:h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shrink-0 border transition-transform duration-200 group-hover:scale-105 ${style.iconBox}`}
         >
-          {Icon && <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />}
+          {Icon && <Icon className="w-5 h-5 stroke-[2.2]" />}
         </div>
 
         {/* Text Details */}
         <div className="flex flex-col text-left min-w-0 flex-1">
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-[14.5px] sm:text-[15.5px] font-extrabold text-[#101B35] font-sans tracking-tight">
+            <span className="text-[13.5px] min-[360px]:text-[14.5px] sm:text-[15.5px] font-extrabold text-[#101B35] font-sans tracking-tight leading-tight">
               {title}
             </span>
             {badgeText && (
               <span
-                className={`px-2 py-0.2 text-[8.5px] sm:text-[9px] font-black rounded-full border uppercase tracking-wider ${style.badge}`}
+                className={`px-1.5 py-0.2 text-[8px] min-[360px]:text-[8.5px] font-black rounded-full border uppercase tracking-wider shrink-0 ${style.badge}`}
               >
                 {badgeText}
               </span>
             )}
           </div>
           {subtitle && (
-            <span className="text-[11px] sm:text-[11.5px] text-[#718096] font-medium font-sans mt-0.5 line-clamp-1">
+            <span className="text-[10.5px] min-[360px]:text-[11px] text-[#718096] font-medium font-sans mt-0.5 line-clamp-1 truncate">
               {subtitle}
             </span>
           )}
@@ -71,22 +71,26 @@ export default function ActionCard({
       </div>
 
       {/* Right: Circular Action Arrow & Decorative Right Illustration */}
-      <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 z-10">
+      <div className="flex items-center gap-1.5 min-[360px]:gap-2 shrink-0 z-10">
         {/* Circular Action Arrow Button */}
         <div
-          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold shadow-xs transition-transform duration-200 group-hover:scale-110 shrink-0 ${style.chevron}`}
+          className={`w-6 h-6 min-[360px]:w-7 min-[360px]:h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold shadow-xs transition-transform duration-200 group-hover:scale-110 shrink-0 ${style.chevron}`}
         >
-          <ChevronRight className="w-4 h-4 stroke-[3]" />
+          <ChevronRight className="w-3.5 h-3.5 min-[360px]:w-4 min-[360px]:h-4 stroke-[3]" />
         </div>
 
         {/* Illustration: Food Bowl, Notepad, or Google Maps Pin */}
         {illustration && (
-          <div className="w-13 h-13 sm:w-15 sm:h-15 shrink-0 flex items-center justify-center select-none pointer-events-none">
+          <div
+            className="w-11 h-11 min-[360px]:w-12 min-[360px]:h-12 shrink-0 flex items-center justify-center select-none pointer-events-none overflow-hidden"
+            style={{ width: '46px', height: '46px', minWidth: '46px', maxWidth: '46px' }}
+          >
             {typeof illustration === 'string' ? (
               <img
                 src={illustration}
                 alt={title}
-                className="w-full h-full object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
+                className="w-full h-full object-contain drop-shadow-xs transition-transform duration-200 group-hover:scale-105"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               />
             ) : (
               illustration

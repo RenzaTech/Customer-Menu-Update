@@ -115,7 +115,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
           <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FEF3C7] border border-[#F59E0B]/50 text-[#92400E] shadow-2xs animate-in fade-in zoom-in-95 duration-150">
             <span className="w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
             <span className="text-xs font-black tracking-wide uppercase font-sans">
-              Dine-in • {restaurant.table.label || restaurant.table.name || 'Table 1'}
+              Dine-in • {(restaurant.table.label || restaurant.table.name || 'Table 1').replace(/^Table 0(\d)$/i, 'Table $1')}
             </span>
           </div>
         )}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Check, Plus, ShoppingBag } from 'lucide-react';
+import { X } from 'lucide-react';
 
 // Curated high quality food photography for cafe categories
 export const FOOD_IMAGE_PAIRS = {
@@ -107,21 +107,11 @@ function formatPrice(price) {
   return num % 1 === 0 ? `₹${num}` : `₹${num.toFixed(2)}`;
 }
 
-export default function DishDetailModal({ dish, onClose, onAddToCart }) {
-  const [justAdded, setJustAdded] = useState(false);
-
+export default function DishDetailModal({ dish, onClose }) {
   if (!dish) return null;
 
   const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
   const { imageUrl, description } = getDishImagePair(dish);
-
-  const handleAdd = () => {
-    if (onAddToCart) {
-      onAddToCart(dish);
-      setJustAdded(true);
-      setTimeout(() => setJustAdded(false), 1200);
-    }
-  };
 
   return (
     <div
@@ -203,35 +193,15 @@ export default function DishDetailModal({ dish, onClose, onAddToCart }) {
             </p>
           </div>
 
-          {/* Action Buttons: Add to Cart + Close */}
-          <div className="pt-3 flex items-center gap-2.5">
+          {/* Action Button: Close */}
+          <div className="pt-3">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-3 px-4 rounded-xl border border-gray-200 text-gray-700 text-xs font-bold hover:bg-gray-50 transition active:scale-95 font-sans"
+              className="w-full py-3 px-4 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold transition active:scale-95 font-sans"
             >
               Close
             </button>
-
-            {onAddToCart && (
-              <button
-                type="button"
-                onClick={handleAdd}
-                className="flex-2 py-3 px-4 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 text-xs font-bold transition shadow-xs flex items-center justify-center gap-1.5 active:scale-95 font-sans"
-              >
-                {justAdded ? (
-                  <>
-                    <Check className="w-4 h-4 stroke-[2.5]" />
-                    <span>Added to Order!</span>
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-4 h-4 stroke-[2.5]" />
-                    <span>Add to Order ({formatPrice(dish.price)})</span>
-                  </>
-                )}
-              </button>
-            )}
           </div>
         </div>
       </div>

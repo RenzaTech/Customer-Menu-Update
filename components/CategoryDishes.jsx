@@ -4,13 +4,10 @@ import { useState, useMemo } from 'react';
 import {
   ArrowLeft,
   Search,
-  ShoppingBag,
-  Plus,
-  Minus,
   ChevronRight,
+  X,
 } from 'lucide-react';
 import DishDetailModal, { getDishImagePair } from './DishDetailModal';
-import CartDrawer from './CartDrawer';
 
 function VegBadge({ isVeg }) {
   if (isVeg === true || isVeg === 1 || isVeg === 'veg') {
@@ -48,40 +45,6 @@ export default function CategoryDishes({
   const [searchQuery, setSearchQuery] = useState('');
   const [dietaryFilter, setDietaryFilter] = useState('all'); // 'all' | 'veg' | 'non-veg'
   const [selectedDish, setSelectedDish] = useState(null);
-  const [cart, setCart] = useState({});
-  const [cartOpen, setCartOpen] = useState(false);
-
-  const addToCart = (dish) => {
-    const key = dish.id || dish._id || dish.name;
-    setCart((current) => ({
-      ...current,
-      [key]: {
-        dish,
-        quantity: (current[key]?.quantity || 0) + 1,
-      },
-    }));
-  };
-
-  const changeQuantity = (key, amount) => {
-    setCart((current) => {
-      const quantity = (current[key]?.quantity || 0) + amount;
-      if (quantity <= 0) {
-        const next = { ...current };
-        delete next[key];
-        return next;
-      }
-      return { ...current, [key]: { ...current[key], quantity } };
-    });
-  };
-
-  const clearCart = () => setCart({});
-
-  const cartItems = Object.entries(cart);
-  const cartCount = cartItems.reduce((sum, [, item]) => sum + item.quantity, 0);
-  const cartTotal = cartItems.reduce(
-    (sum, [, item]) => sum + (Number(item.dish.price) || 0) * item.quantity,
-    0
-  );
 
   const items = useMemo(() => {
     return category?.foodItems || category?.items || [];
@@ -111,132 +74,124 @@ export default function CategoryDishes({
   }, [items, searchQuery, dietaryFilter]);
 
   return (
-    <div className="relative w-full max-w-lg mx-auto px-4 sm:px-5 py-4 pb-28 animate-in fade-in duration-200">
-      {/* Top Navigation Row: Back Button & Cart Pill */}
-      <div className="flex items-center justify-between pb-3.5 border-b border-gray-200/80 mb-4">
+    <div className="relative w-full px-4 pt-3 pb-0 animate-in fade-in duration-200 selection:bg-[#FFBB17]/30 overflow-hidden">
+      {/* 1. Header: Back to Categories + MENU ITEMS */}
+      <div className="relative z-10 flex items-center justify-between pb-3 border-b border-[#E8EAF0] mb-3.5">
         <button
           type="button"
           onClick={onBackToCategories}
-          className="h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border border-gray-200 bg-white text-gray-800 text-xs font-semibold hover:bg-gray-50 active:scale-95 transition shadow-2xs"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#E8EAF0] bg-white text-[#182238] text-xs font-semibold shadow-[0_1px_3px_rgba(24,34,56,0.04)] hover:bg-[#FFF5D9]/40 active:scale-95 transition"
         >
-          <ArrowLeft className="w-3.5 h-3.5 stroke-[2.5]" />
+          <ArrowLeft className="w-3.5 h-3.5 text-[#182238] stroke-[2.2]" />
           <span>All Categories</span>
         </button>
 
-        {/* Cart Shortcut Pill */}
-        <button
-          type="button"
-          onClick={() => setCartOpen(true)}
-          className={`h-9 inline-flex items-center gap-1.5 px-3 rounded-xl border text-xs font-bold transition shadow-2xs active:scale-95 ${
-            cartCount > 0
-              ? 'bg-[#FFBB17] text-gray-950 border-[#FFBB17] hover:bg-[#E5A710]'
-              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
-          }`}
-        >
-          <ShoppingBag className="w-3.5 h-3.5 stroke-[2.2]" />
-          <span>Cart</span>
-          {cartCount > 0 && (
-            <span className="w-5 h-5 rounded-full bg-gray-950 text-white text-[10px] flex items-center justify-center font-bold">
-              {cartCount}
-            </span>
-          )}
-        </button>
+        <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#9AA3B2] font-sans">
+          MENU ITEMS
+        </span>
       </div>
 
-      {/* Category Title & Stats */}
-      <div className="mb-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 tracking-tight font-sans">
+      {/* 2. Page Heading & Subtitle */}
+      <div className="relative z-10 mb-3.5">
+        <div className="flex items-center gap-2 flex-wrap">
+          <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#182238] leading-tight font-sans">
             {category?.name}
-          </h2>
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/30">
-            {items.length} {items.length === 1 ? 'item' : 'items'}
+          </h1>
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#FFF5D9] text-[#A16207] border border-[#FFE3A0]/70 shrink-0">
+            {items.length} {items.length === 1 ? 'dish' : 'dishes'}
           </span>
         </div>
-        <p className="text-xs text-gray-500 mt-1 font-sans">
-          Select dishes to add to your order, or tap any dish to view details.
+        <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1 leading-relaxed font-normal">
+          Explore freshly prepared dishes available in {category?.name || 'this category'}.
         </p>
       </div>
 
-      {/* Search Bar & Dietary Filter Tabs */}
-      <div className="space-y-2.5 mb-5">
-        {/* Search Input */}
-        <div className="relative">
-          <Search className="w-4 h-4 text-gray-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+      {/* 3. Search Bar with Signature Gold Border */}
+      <div className="relative z-10 mb-3">
+        <div className="relative w-full h-[46px] rounded-2xl bg-white border-2 border-[#FFE082] focus-within:border-[#FFBB17] shadow-[0_2px_8px_rgba(255,187,23,0.08)] transition flex items-center">
+          <Search className="w-4 h-4 text-[#9AA3B2] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={`Search within ${category?.name || 'this category'}...`}
-            className="w-full pl-10 pr-14 py-2.5 bg-white border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#FFBB17] focus:ring-2 focus:ring-[#FFBB17]/20 transition shadow-2xs font-sans"
+            placeholder={`Search dishes in ${category?.name || 'this category'}...`}
+            className="w-full h-full pl-10 pr-9 bg-transparent rounded-2xl text-xs sm:text-[13px] text-[#182238] placeholder-[#9AA3B2] focus:outline-none"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-gray-400 hover:text-gray-700 px-1.5 py-0.5 rounded"
+              className="w-6 h-6 rounded-full flex items-center justify-center absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9AA3B2] hover:text-[#182238] hover:bg-[#FFF5D9] transition"
             >
-              Clear
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
-
-        {/* Dietary Pills (All / Veg Only / Non-Veg) */}
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setDietaryFilter('all')}
-            className={`h-8 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
-              dietaryFilter === 'all'
-                ? 'bg-gray-900 text-white border-gray-900 shadow-2xs'
-                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-            }`}
-          >
-            All Items
-          </button>
-          <button
-            type="button"
-            onClick={() => setDietaryFilter('veg')}
-            className={`h-8 inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
-              dietaryFilter === 'veg'
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-400 shadow-2xs'
-                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-600" />
-            <span>Veg Only</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setDietaryFilter('non-veg')}
-            className={`h-8 inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition active:scale-95 font-sans ${
-              dietaryFilter === 'non-veg'
-                ? 'bg-rose-50 text-rose-800 border-rose-400 shadow-2xs'
-                : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50'
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-rose-600" />
-            <span>Non-Veg</span>
-          </button>
-        </div>
       </div>
 
-      {/* Dishes List */}
+      {/* 4. Dietary Filter Tabs (Signature SCANZAA Styling) */}
+      <div className="relative z-10 flex items-center gap-2 mb-4">
+        <button
+          type="button"
+          onClick={() => setDietaryFilter('all')}
+          className={`h-[34px] px-3.5 rounded-xl text-xs font-bold border transition-all active:scale-95 font-sans shadow-[0_1px_3px_rgba(24,34,56,0.04)] ${
+            dietaryFilter === 'all'
+              ? 'bg-[#182238] text-white border-[#182238]'
+              : 'bg-white text-[#737D8D] border-[#E8EAF0] hover:bg-[#FFF5D9]/30 hover:text-[#182238]'
+          }`}
+        >
+          All Items
+        </button>
+        <button
+          type="button"
+          onClick={() => setDietaryFilter('veg')}
+          className={`h-[34px] inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition-all active:scale-95 font-sans shadow-[0_1px_3px_rgba(24,34,56,0.04)] ${
+            dietaryFilter === 'veg'
+              ? 'bg-[#F0FFF6] text-[#16B86A] border-[#16B86A]/40'
+              : 'bg-white text-[#737D8D] border-[#E8EAF0] hover:bg-[#FFF5D9]/30 hover:text-[#182238]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-[#16B86A]" />
+          <span>Veg Only</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setDietaryFilter('non-veg')}
+          className={`h-[34px] inline-flex items-center gap-1.5 px-3.5 rounded-xl text-xs font-bold border transition-all active:scale-95 font-sans shadow-[0_1px_3px_rgba(24,34,56,0.04)] ${
+            dietaryFilter === 'non-veg'
+              ? 'bg-[#FFF1F2] text-[#E11D48] border-[#E11D48]/30'
+              : 'bg-white text-[#737D8D] border-[#E8EAF0] hover:bg-[#FFF5D9]/30 hover:text-[#182238]'
+          }`}
+        >
+          <span className="w-2 h-2 rounded-full bg-[#E11D48]" />
+          <span>Non-Veg</span>
+        </button>
+      </div>
+
+      {/* 5. Dishes List */}
       {filteredDishes.length === 0 ? (
-        <div className="py-12 text-center bg-white border border-gray-200 rounded-2xl p-6 shadow-2xs">
-          <p className="text-xs font-semibold text-gray-600 font-sans">No dishes match your selection</p>
-          <p className="text-[11px] text-gray-400 mt-1 font-sans">
+        <div className="relative z-10 py-12 text-center bg-white border border-[#E8EAF0] rounded-2xl p-6 shadow-[0_2px_8px_rgba(24,34,56,0.04)]">
+          <p className="text-xs font-semibold text-[#182238] font-sans">No dishes match your selection</p>
+          <p className="text-[11px] text-[#737D8D] mt-1 font-sans">
             Try resetting your filters or search keywords.
           </p>
+          <button
+            type="button"
+            onClick={() => {
+              setSearchQuery('');
+              setDietaryFilter('all');
+            }}
+            className="mt-3 px-3 py-1 bg-[#FFF5D9] text-[#8A5700] text-xs font-semibold rounded-lg hover:bg-[#FFE3A0] transition"
+          >
+            Clear Filters
+          </button>
         </div>
       ) : (
-        <div className="space-y-2.5">
+        <div className="relative z-10 space-y-2.5">
           {filteredDishes.map((dish, idx) => {
             const isAvailable = dish.isAvailable !== false;
             const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
             const { imageUrl } = getDishImagePair(dish);
-            const key = dish.id || dish._id || dish.name;
-            const quantity = cart[key]?.quantity || 0;
 
             return (
               <div
@@ -250,10 +205,10 @@ export default function CategoryDishes({
                     setSelectedDish(dish);
                   }
                 }}
-                className="group p-3 sm:p-3.5 bg-white border border-gray-200/90 rounded-2xl shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_16px_rgba(255,187,23,0.12)] hover:border-[#FFBB17]/70 transition-all duration-200 flex items-center justify-between gap-3 text-left select-none cursor-pointer"
+                className="group p-3 sm:p-3.5 bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_8px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.14)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between gap-3 text-left select-none cursor-pointer"
               >
                 {/* Left: Dish Thumbnail */}
-                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-200/80">
+                <div className="relative w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden bg-[#FFF6E3] shrink-0 border border-[#FFE3A0]/60">
                   <img
                     src={imageUrl}
                     alt={dish.name}
@@ -264,72 +219,38 @@ export default function CategoryDishes({
                   </div>
                 </div>
 
-                {/* Center: Dish Info (Neatly Aligned) */}
+                {/* Center: Dish Info */}
                 <div className="flex-1 min-w-0 pr-1 flex flex-col justify-center">
-                  <h3 className="text-sm sm:text-[15px] font-bold text-gray-900 font-sans tracking-tight truncate group-hover:text-amber-950 transition-colors">
+                  <h3 className="text-sm sm:text-[15px] font-bold text-[#182238] font-sans tracking-tight truncate group-hover:text-black transition-colors">
                     {dish.name}
                   </h3>
 
                   {dish.description ? (
-                    <p className="text-[11px] sm:text-xs text-gray-500 line-clamp-1 mt-0.5 font-sans leading-relaxed">
+                    <p className="text-[11px] sm:text-xs text-[#737D8D] line-clamp-1 mt-0.5 font-sans leading-relaxed">
                       {dish.description}
                     </p>
                   ) : (
-                    <p className="text-[11px] text-gray-400 mt-0.5 font-sans">
+                    <p className="text-[11px] text-[#9AA3B2] mt-0.5 font-sans">
                       Freshly prepared on order
                     </p>
                   )}
 
                   <div className="mt-1.5 flex items-center gap-2">
-                    <span className="text-sm sm:text-[15px] font-bold text-gray-950 font-sans">
+                    <span className="text-[14.5px] sm:text-[15.5px] font-extrabold text-[#182238] font-sans">
                       {formatPrice(dish.price)}
                     </span>
 
                     {!isAvailable && (
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gray-100 text-gray-500 border border-gray-200">
+                      <span className="text-[9.5px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gray-100 text-[#737D8D] border border-[#E8EAF0]">
                         Sold Out
                       </span>
                     )}
                   </div>
                 </div>
 
-                {/* Right: Add to Cart / Quantity Stepper */}
-                <div
-                  className="shrink-0 flex items-center justify-end"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {quantity === 0 ? (
-                    <button
-                      type="button"
-                      disabled={!isAvailable}
-                      onClick={() => addToCart(dish)}
-                      className="w-20 h-9 rounded-xl bg-[#FFBB17] hover:bg-[#E5A710] text-gray-950 font-bold text-xs shadow-xs transition active:scale-95 disabled:bg-gray-100 disabled:text-gray-400 flex items-center justify-center font-sans"
-                    >
-                      + ADD
-                    </button>
-                  ) : (
-                    <div className="h-9 w-20 flex items-center justify-between bg-[#FFF8E7] border border-[#FFBB17]/70 rounded-xl px-1 shadow-xs">
-                      <button
-                        type="button"
-                        onClick={() => changeQuantity(key, -1)}
-                        className="w-6 h-6 rounded-lg bg-white shadow-2xs flex items-center justify-center text-gray-800 hover:bg-gray-100 transition active:scale-90"
-                        aria-label="Decrease quantity"
-                      >
-                        <Minus className="w-3 h-3 stroke-[2.5]" />
-                      </button>
-                      <span className="text-xs font-bold text-gray-950 w-4 text-center font-sans">
-                        {quantity}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => changeQuantity(key, 1)}
-                        className="w-6 h-6 rounded-lg bg-[#FFBB17] text-gray-950 shadow-2xs flex items-center justify-center hover:bg-[#E5A710] transition active:scale-90"
-                        aria-label="Increase quantity"
-                      >
-                        <Plus className="w-3 h-3 stroke-[2.5]" />
-                      </button>
-                    </div>
-                  )}
+                {/* Right: View details chevron */}
+                <div className="shrink-0 flex items-center pr-1 text-[#9AA3B2] group-hover:text-[#182238] transition-colors">
+                  <ChevronRight className="w-4 h-4 stroke-[2.2] group-hover:translate-x-0.5 transition-transform" />
                 </div>
               </div>
             );
@@ -337,57 +258,19 @@ export default function CategoryDishes({
         </div>
       )}
 
-      {/* Modern Floating Sticky Bottom Cart Bar */}
-      {cartCount > 0 && (
-        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-[410px] px-3 z-40 animate-in slide-in-from-bottom duration-300">
-          <div
-            onClick={() => setCartOpen(true)}
-            role="button"
-            tabIndex={0}
-            className="w-full p-3 bg-gray-950 text-white rounded-2xl shadow-2xl flex items-center justify-between cursor-pointer active:scale-[0.99] hover:bg-black transition border border-gray-800"
-          >
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#FFBB17] text-gray-950 flex items-center justify-center font-bold shadow-xs">
-                <ShoppingBag className="w-5 h-5 stroke-[2.2]" />
-              </div>
-              <div>
-                <div className="flex items-center gap-1.5">
-                  <span className="text-xs font-bold text-[#FFBB17] uppercase tracking-wider font-sans">
-                    {cartCount} {cartCount === 1 ? 'item' : 'items'}
-                  </span>
-                  <span className="text-gray-500">•</span>
-                  <span className="text-sm font-bold text-white font-sans">
-                    {formatPrice(cartTotal)}
-                  </span>
-                </div>
-                <span className="text-[10px] text-gray-400 font-sans block">
-                  Tap to view order summary
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#FFBB17] text-gray-950 font-bold text-xs shadow-xs hover:bg-[#E5A710] transition font-sans">
-              <span>View Cart</span>
-              <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
-            </div>
-          </div>
-        </div>
-      )}
+      {/* 6. Bottom Decorative Waves & Botanical Leaves */}
+      <div className="relative -mx-4 mt-8 -mb-1 select-none pointer-events-none overflow-hidden">
+        <img
+          src="/categories/bottom-waves-leaves.png"
+          alt="Decorative leaves and golden waves"
+          className="w-full h-auto object-cover block"
+        />
+      </div>
 
       {/* Dish Detail Modal */}
       <DishDetailModal
         dish={selectedDish}
         onClose={() => setSelectedDish(null)}
-        onAddToCart={addToCart}
-      />
-
-      {/* Modern Cart Drawer */}
-      <CartDrawer
-        isOpen={cartOpen}
-        onClose={() => setCartOpen(false)}
-        cart={cart}
-        onUpdateQuantity={changeQuantity}
-        onClearCart={clearCart}
       />
     </div>
   );

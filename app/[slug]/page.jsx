@@ -8,6 +8,7 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function DynamicRestaurantPage({ params }) {
-  return <PortalClient params={params} />;
+export default function DynamicRestaurantPage({ params, searchParams }) {
+  const initialView = searchParams?.view || 'hub';
+  return <PortalClient params={params} initialView={initialView} />;
 }

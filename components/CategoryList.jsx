@@ -42,23 +42,25 @@ export default function CategoryList({
         </span>
       </div>
 
-      {/* Top-Right Culinary Ingredients Illustration (Basil, Tomatoes, Pepper bowl) */}
-      <div className="absolute top-[52px] right-0 w-24 sm:w-28 pointer-events-none select-none z-0">
-        <img
-          src="/categories/top-culinary-art.png"
-          alt="Culinary ingredients"
-          className="w-full h-auto object-contain block opacity-95 drop-shadow-xs"
-        />
-      </div>
+      {/* 2. Page Hero Banner: Heading + Culinary Art Illustration */}
+      <div className="relative z-10 mb-3 min-h-[110px] flex items-center justify-between">
+        <div className="relative z-10 pr-2 max-w-[62%] sm:max-w-[65%]">
+          <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#182238] leading-tight">
+            Explore Our Menu
+          </h1>
+          <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1 leading-relaxed font-normal">
+            Select a category to view its freshly prepared dishes at {restaurantName || "Anbu'de Cafe"}.
+          </p>
+        </div>
 
-      {/* 2. Page Heading & Subtitle */}
-      <div className="relative z-10 mb-3.5 pr-20">
-        <h1 className="text-2xl sm:text-[26px] font-extrabold tracking-tight text-[#182238] leading-tight">
-          Explore Our Menu
-        </h1>
-        <p className="text-xs sm:text-[13px] text-[#737D8D] mt-1 leading-relaxed font-normal">
-          Select a category to view its freshly prepared dishes at {restaurantName || "Anbu'de Cafe"}.
-        </p>
+        {/* Top-Right Culinary Ingredients Illustration (Basil, Tomatoes, Pepper bowl) */}
+        <div className="absolute -top-1 right-0 h-[120px] w-[130px] sm:w-[145px] pointer-events-none select-none z-0">
+          <img
+            src="/categories/top-culinary-art.png"
+            alt="Culinary ingredients"
+            className="w-full h-full object-contain object-right drop-shadow-xs"
+          />
+        </div>
       </div>
 
       {/* 3. Search Bar with Signature Gold Border */}
@@ -108,10 +110,10 @@ export default function CategoryList({
                 key={cat.id || cat.name || index}
                 type="button"
                 onClick={() => onSelectCategory(cat)}
-                className="group w-full p-2 min-[380px]:p-2.5 min-h-[72px] min-[380px]:min-h-[76px] bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_8px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.14)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between text-left"
+                className="group w-full p-1.5 min-[360px]:p-2 min-[390px]:p-2.5 min-h-[68px] min-[360px]:min-h-[72px] min-[390px]:min-h-[76px] bg-white border border-[#E8EAF0] rounded-2xl shadow-[0_2px_8px_rgba(24,34,56,0.04)] hover:border-[#FFBB17] hover:shadow-[0_4px_14px_rgba(255,187,23,0.14)] active:scale-[0.98] transition-all duration-150 flex items-center justify-between text-left"
               >
-                {/* Left: 48-52px Food Icon Container in Pale Gold with 3D Dish Illustration */}
-                <div className="w-12 h-12 min-[380px]:w-[50px] min-[380px]:h-[50px] rounded-2xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FFF6E3] border border-[#FFE3A0]/60 group-hover:scale-105 transition-transform duration-200">
+                {/* Left: Food Icon Container in Pale Gold with 3D Dish Illustration */}
+                <div className="w-10 h-10 min-[360px]:w-11 min-[360px]:h-11 min-[390px]:w-[50px] min-[390px]:h-[50px] rounded-xl min-[360px]:rounded-2xl overflow-hidden shrink-0 flex items-center justify-center bg-[#FFF6E3] border border-[#FFE3A0]/60 group-hover:scale-105 transition-transform duration-200">
                   <CategoryIcon
                     name={cat.name}
                     className="w-full h-full object-cover"
@@ -119,19 +121,19 @@ export default function CategoryList({
                 </div>
 
                 {/* Middle: Category Title & Item Count Badge */}
-                <div className="flex-1 min-w-0 px-2 min-[380px]:px-2.5">
-                  <h3 className="text-xs min-[380px]:text-[13px] font-bold text-[#182238] leading-tight line-clamp-2 font-sans group-hover:text-black">
+                <div className="flex-1 min-w-0 px-1.5 min-[360px]:px-2 min-[390px]:px-2.5">
+                  <h3 className="text-[11.5px] min-[360px]:text-xs min-[390px]:text-[13px] font-bold text-[#182238] leading-tight line-clamp-2 font-sans group-hover:text-black">
                     {cat.name}
                   </h3>
-                  <div className="mt-1">
-                    <span className="inline-flex items-center px-1.5 min-[380px]:px-2 py-0.5 rounded-full bg-[#FFF6E3] border border-[#FFE3A0]/70 text-[9.5px] min-[380px]:text-[10px] font-semibold text-[#A16207] whitespace-nowrap">
+                  <div className="mt-0.5 min-[360px]:mt-1">
+                    <span className="inline-flex items-center px-1.5 min-[390px]:px-2 py-0.5 rounded-full bg-[#FFF6E3] border border-[#FFE3A0]/70 text-[9px] min-[360px]:text-[9.5px] min-[390px]:text-[10px] font-semibold text-[#A16207] whitespace-nowrap">
                       {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
                     </span>
                   </div>
                 </div>
 
                 {/* Right: Small chevron */}
-                <ChevronRight className="w-3.5 h-3.5 text-[#9AA3B2] group-hover:text-[#182238] shrink-0 stroke-[2.2] transition-colors" />
+                <ChevronRight className="w-3 h-3 min-[360px]:w-3.5 min-[360px]:h-3.5 text-[#9AA3B2] group-hover:text-[#182238] shrink-0 stroke-[2.2] transition-colors" />
               </button>
             );
           })}
