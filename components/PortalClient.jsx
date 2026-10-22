@@ -34,7 +34,17 @@ export default function PortalClient({ params, initialView = 'hub' }) {
         if (res.ok) {
           const data = await res.json();
           if (isMounted && data) {
-            setRestaurant(data.restaurant || data);
+            const rData = data.restaurant || data;
+            const tableData = data.table || rData?.table || null;
+            if (tableData) {
+              rData.table = tableData;
+            } else {
+              const match = slug?.match(/-t(\d+)$/i);
+              if (match) {
+                rData.table = { label: `Table ${parseInt(match[1], 10)}` };
+              }
+            }
+            setRestaurant(rData);
             setCategories(data.categories || []);
             return;
           }
@@ -45,7 +55,12 @@ export default function PortalClient({ params, initialView = 'hub' }) {
 
       // Use local fallback data
       if (isMounted) {
-        setRestaurant(fallbackMenuData.restaurant || fallbackMenuData);
+        const rData = fallbackMenuData.restaurant || fallbackMenuData;
+        const match = slug?.match(/-t(\d+)$/i);
+        if (match) {
+          rData.table = { label: `Table ${parseInt(match[1], 10)}` };
+        }
+        setRestaurant(rData);
         setCategories(fallbackMenuData.categories || []);
       }
     }
@@ -90,11 +105,11 @@ export default function PortalClient({ params, initialView = 'hub' }) {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#F6F3EC] sm:py-6 sm:px-4 flex justify-center items-start text-[#101B35] font-sans selection:bg-[#FFB800]/30 selection:text-amber-950">
+    <div className="min-h-screen w-full bg-[#FFFCF7] sm:bg-[#F6F3EC] sm:py-6 sm:px-4 flex justify-center items-start text-[#101B35] font-sans selection:bg-[#FFB800]/30 selection:text-amber-950 overflow-x-hidden">
       {/* Mobile Device Viewport Mockup on Desktop, 100% Full-bleed on Mobile */}
       <div
-        className="w-full max-w-[430px] mx-auto bg-[#FFFCF7] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_16px_50px_rgba(0,0,0,0.08)] overflow-hidden border-0 sm:border sm:border-[#E8EAF0] flex flex-col justify-between transition-all"
-        style={{ maxWidth: '430px', margin: '0 auto' }}
+        className="w-full max-w-[430px] min-w-0 mx-auto bg-[#FFFCF7] min-h-screen sm:min-h-[850px] sm:rounded-[32px] sm:shadow-[0_16px_50px_rgba(0,0,0,0.08)] overflow-hidden border-0 sm:border sm:border-[#E8EAF0] flex flex-col justify-between transition-all"
+        style={{ maxWidth: '430px' }}
       >
         <div className="w-full">
           {/* VIEW 1: Main Dining Hub */}

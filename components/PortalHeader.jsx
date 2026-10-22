@@ -33,25 +33,30 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
     <header className="relative w-full bg-[#FFFCF7] pb-2">
       {/* 1. Header Banner / Cover Section */}
       {!hasCustomCover ? (
-        /* Default State: Master Ultra-High-Resolution Header Artwork (1500x828 Retina) */
+        /* Default State: Master Edge-to-Edge Banner with Scalloped Wave & Leaves, with Separate Circular Logo */
         <div className="relative w-full overflow-hidden bg-[#1a1510]">
           <img
-            src="/hub/hub-cover-logo.png"
+            src="/hub/hub-banner-base.png"
             alt={`${name} cover`}
             className="w-full h-auto object-cover block select-none"
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
 
-          {/* If admin uploaded a custom logo, overlay it seamlessly in the center circular logo slot */}
-          {hasCustomLogo && (
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-[2%] w-[27%] aspect-square rounded-full bg-white p-1 shadow-[0_8px_24px_rgba(255,184,0,0.25)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden z-20">
-              <img
-                src={logoUrl}
-                alt={name}
-                className="w-full h-full object-cover rounded-full"
-              />
-            </div>
-          )}
+          {/* SEPARATE Circular Logo Element: Independent from upper image, dynamically displays admin or default logo */}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full overflow-hidden flex items-center justify-center z-20 pointer-events-none select-none"
+            style={{
+              top: '75.18%',
+              width: '21%',
+              aspectRatio: '1 / 1',
+            }}
+          >
+            <img
+              src={logoUrl}
+              alt={name}
+              className="w-full h-full object-contain"
+            />
+          </div>
         </div>
       ) : (
         /* Custom Admin-Uploaded Cover State */
@@ -85,7 +90,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
       )}
 
       {/* 2. Restaurant Profile Information Container */}
-      <div className="relative max-w-sm mx-auto px-4 pt-1 sm:pt-2 flex flex-col items-center text-center z-10">
+      <div className="relative w-full max-w-sm mx-auto px-3.5 min-[360px]:px-4 pt-1 sm:pt-2 flex flex-col items-center text-center z-10">
         {/* Restaurant Name: Bold Typography + Golden Verified Checkmark */}
         <div className="mt-1 flex items-center justify-center gap-1.5">
           <h1 className="text-[27px] sm:text-[30px] font-black tracking-tight text-[#101B35] font-sans leading-tight">
@@ -106,13 +111,22 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
           {cuisineType}
         </p>
 
+        {restaurant?.table && (
+          <div className="mt-2.5 inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#FEF3C7] border border-[#F59E0B]/50 text-[#92400E] shadow-2xs animate-in fade-in zoom-in-95 duration-150">
+            <span className="w-2 h-2 rounded-full bg-[#10B981] shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
+            <span className="text-xs font-black tracking-wide uppercase font-sans">
+              Dine-in • {restaurant.table.label || restaurant.table.name || 'Table 1'}
+            </span>
+          </div>
+        )}
+
         {/* Dual Cards: Open Now (#F0FFF6) + Rating & Review Count (#FEFCE8) */}
-        <div className="grid grid-cols-2 gap-2.5 w-full mt-3.5">
+        <div className="grid grid-cols-2 gap-2 min-[360px]:gap-2.5 w-full mt-3.5">
           {/* Card 1: Open Now */}
-          <div className="bg-[#F0FFF6] border border-[#16B86A]/30 rounded-2xl py-2.5 px-3 text-center shadow-2xs">
+          <div className="bg-[#F0FFF6] border border-[#16B86A]/30 rounded-2xl py-2 px-2 min-[360px]:py-2.5 min-[360px]:px-3 text-center shadow-2xs">
             <div className="flex items-center justify-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-[#16B86A] animate-pulse" />
-              <span className="text-[14px] font-extrabold text-[#16B86A] font-sans">
+              <span className="text-[13px] min-[360px]:text-[14px] font-extrabold text-[#16B86A] font-sans">
                 Open Now
               </span>
             </div>
@@ -127,12 +141,12 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
               href={googleReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#FEFCE8] border border-[#FDE68A] hover:border-[#FFB800] rounded-2xl py-2.5 px-3 text-center shadow-2xs transition-all active:scale-95 group cursor-pointer"
+              className="bg-[#FEFCE8] border border-[#FDE68A] hover:border-[#FFB800] rounded-2xl py-2 px-2 min-[360px]:py-2.5 min-[360px]:px-3 text-center shadow-2xs transition-all active:scale-95 group cursor-pointer"
               title="Rate us on Google Maps"
             >
               <div className="flex items-center justify-center gap-1.5">
                 <Star className="w-4 h-4 fill-[#EAB308] text-[#EAB308]" />
-                <span className="text-[14px] font-extrabold text-[#8B4513] font-sans group-hover:text-amber-950">
+                <span className="text-[13px] min-[360px]:text-[14px] font-extrabold text-[#8B4513] font-sans group-hover:text-amber-950">
                   {ratingText}
                 </span>
               </div>
@@ -141,10 +155,10 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
               </p>
             </a>
           ) : (
-            <div className="bg-[#FEFCE8] border border-[#FDE68A] rounded-2xl py-2.5 px-3 text-center shadow-2xs">
+            <div className="bg-[#FEFCE8] border border-[#FDE68A] rounded-2xl py-2 px-2 min-[360px]:py-2.5 min-[360px]:px-3 text-center shadow-2xs">
               <div className="flex items-center justify-center gap-1.5">
                 <Star className="w-4 h-4 fill-[#EAB308] text-[#EAB308]" />
-                <span className="text-[14px] font-extrabold text-[#8B4513] font-sans">
+                <span className="text-[13px] min-[360px]:text-[14px] font-extrabold text-[#8B4513] font-sans">
                   {ratingText}
                 </span>
               </div>
@@ -172,42 +186,42 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
         <div className="w-full mt-4 pt-3.5 border-t border-[#E8EAF0] grid grid-cols-4 items-center text-center">
           {/* Feature 1: Great Coffee */}
           <div className="flex flex-col items-center">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FAF0E6] flex items-center justify-center text-[#8B4513] shadow-2xs transition-transform hover:scale-105">
-              <Coffee className="w-5 h-5 stroke-[2.2]" />
+            <div className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-full bg-[#FAF0E6] flex items-center justify-center text-[#8B4513] shadow-2xs transition-transform hover:scale-105">
+              <Coffee className="w-4 h-4 min-[360px]:w-5 min-[360px]:h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
+            <span className="text-[9px] min-[360px]:text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
               Great Coffee
             </span>
           </div>
 
           {/* Divider & Feature 2: Tasty Food */}
           <div className="flex flex-col items-center border-l border-[#E8EAF0]">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#FFF1E6] flex items-center justify-center text-[#EA580C] shadow-2xs transition-transform hover:scale-105">
-              <Utensils className="w-5 h-5 stroke-[2.2]" />
+            <div className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-full bg-[#FFF1E6] flex items-center justify-center text-[#EA580C] shadow-2xs transition-transform hover:scale-105">
+              <Utensils className="w-4 h-4 min-[360px]:w-5 min-[360px]:h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
+            <span className="text-[9px] min-[360px]:text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
               Tasty Food
             </span>
           </div>
 
           {/* Divider & Feature 3: Cozy Ambience */}
           <div className="flex flex-col items-center border-l border-[#E8EAF0]">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#F5EBE1] flex items-center justify-center text-[#78350F] shadow-2xs transition-transform hover:scale-105">
-              <Users className="w-5 h-5 stroke-[2.2]" />
+            <div className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-full bg-[#F5EBE1] flex items-center justify-center text-[#78350F] shadow-2xs transition-transform hover:scale-105">
+              <Users className="w-4 h-4 min-[360px]:w-5 min-[360px]:h-5 stroke-[2.2]" />
             </div>
-            <span className="text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
+            <span className="text-[9px] min-[360px]:text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
               Cozy Ambience
             </span>
           </div>
 
           {/* Divider & Feature 4: Fresh Ingredients */}
           <div className="flex flex-col items-center border-l border-[#E8EAF0]">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#E8F5E9] flex items-center justify-center text-[#16B86A] shadow-2xs transition-transform hover:scale-105">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <div className="w-9 h-9 min-[360px]:w-10 min-[360px]:h-10 sm:w-11 sm:h-11 rounded-full bg-[#E8F5E9] flex items-center justify-center text-[#16B86A] shadow-2xs transition-transform hover:scale-105">
+              <svg className="w-4 h-4 min-[360px]:w-5 min-[360px]:h-5" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z" />
               </svg>
             </div>
-            <span className="text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
+            <span className="text-[9px] min-[360px]:text-[10px] sm:text-[10.5px] font-bold text-[#718096] mt-1.5 leading-tight font-sans">
               Fresh Ingredients
             </span>
           </div>

@@ -50,7 +50,7 @@ export default function CartDrawer({
   cart = {},
   onUpdateQuantity,
   onClearCart,
-  tableNumber = 'Table 4',
+  tableNumber = 'Table 1',
 }) {
   const [cookingNotes, setCookingNotes] = useState('');
   const [orderSubmitted, setOrderSubmitted] = useState(false);

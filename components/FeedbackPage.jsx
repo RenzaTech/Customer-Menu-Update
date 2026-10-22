@@ -43,7 +43,7 @@ export default function FeedbackPage({
   const restaurantName = restaurant?.name || "Anbu'de Cafe";
   const slug = restaurant?.slug || 'anbude-cafe';
 
-  const [tableNumber, setTableNumber] = useState('');
+  const [tableNumber, setTableNumber] = useState(restaurant?.table?.label || '');
   const [overallRating, setOverallRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
 
