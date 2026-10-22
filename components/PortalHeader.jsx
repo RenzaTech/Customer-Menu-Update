@@ -34,7 +34,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
       {/* 1. Header Banner / Cover Section */}
       {!hasCustomCover ? (
         /* Default State: Master Ultra-High-Resolution Header Artwork (1500x828 Retina) */
-        <div className="relative w-full overflow-hidden rounded-t-[28px] bg-[#1a1510] shadow-[0_4px_20px_rgba(0,0,0,0.06)]">
+        <div className="relative w-full overflow-hidden bg-[#1a1510]">
           <img
             src="/hub/hub-cover-logo.png"
             alt={`${name} cover`}
@@ -56,7 +56,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
       ) : (
         /* Custom Admin-Uploaded Cover State */
         <div className="relative w-full">
-          <div className="relative w-full h-[220px] sm:h-[240px] overflow-hidden rounded-t-[28px] bg-[#1a1510]">
+          <div className="relative w-full h-[220px] sm:h-[240px] overflow-hidden bg-[#1a1510]">
             <img
               src={coverImage}
               alt={`${name} cover`}

@@ -71,7 +71,7 @@ export default function ActionCard({
       </div>
 
       {/* Right: Circular Action Arrow & Decorative Right Illustration */}
-      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 z-10 -mr-2.5 sm:-mr-3">
+      <div className="flex items-center gap-2 sm:gap-2.5 shrink-0 z-10">
         {/* Circular Action Arrow Button */}
         <div
           className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center font-bold shadow-xs transition-transform duration-200 group-hover:scale-110 shrink-0 ${style.chevron}`}
@@ -81,12 +81,12 @@ export default function ActionCard({
 
         {/* Illustration: Food Bowl, Notepad, or Google Maps Pin */}
         {illustration && (
-          <div className="w-16 h-14 sm:w-18 sm:h-16 shrink-0 flex items-center justify-center select-none overflow-hidden">
+          <div className="w-13 h-13 sm:w-15 sm:h-15 shrink-0 flex items-center justify-center select-none pointer-events-none">
             {typeof illustration === 'string' ? (
               <img
                 src={illustration}
                 alt={title}
-                className="w-full h-full object-cover scale-105"
+                className="w-full h-full object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105"
               />
             ) : (
               illustration

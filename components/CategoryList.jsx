@@ -43,11 +43,11 @@ export default function CategoryList({
       </div>
 
       {/* Top-Right Culinary Ingredients Illustration (Basil, Tomatoes, Pepper bowl) */}
-      <div className="absolute top-6 right-0 w-28 sm:w-32 pointer-events-none select-none z-0 overflow-hidden">
+      <div className="absolute top-[52px] right-0 w-24 sm:w-28 pointer-events-none select-none z-0">
         <img
           src="/categories/top-culinary-art.png"
           alt="Culinary ingredients"
-          className="w-full h-auto object-contain block opacity-95"
+          className="w-full h-auto object-contain block opacity-95 drop-shadow-xs"
         />
       </div>
 
@@ -139,7 +139,7 @@ export default function CategoryList({
       )}
 
       {/* 5. Bottom Decorative Waves & Botanical Leaves */}
-      <div className="relative -mx-4 mt-6 select-none pointer-events-none overflow-hidden">
+      <div className="relative -mx-4 mt-8 -mb-1 select-none pointer-events-none overflow-hidden">
         <img
           src="/categories/bottom-waves-leaves.png"
           alt="Decorative leaves and golden waves"
