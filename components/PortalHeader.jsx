@@ -24,7 +24,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
   // Separate Cover Photo: uses restaurant coverImage from backend/admin or default cafe cover
   const coverImage =
     restaurant?.coverImage ||
-    'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80';
+    '/hub/default-cafe-cover.jpg';
 
   // Separate Logo: uses restaurant logoUrl from backend/admin or default circular Anbu Cafe logo
   const logoUrl =
@@ -36,11 +36,15 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
   return (
     <header className="relative w-full bg-[#FFFCF7] pb-2">
       {/* 1. SEPARATE Cover Photo Slot with Seamless Scalloped Wave Cutout */}
-      <div className="relative w-full h-[240px] sm:h-[265px] overflow-hidden rounded-t-[28px] bg-[#1a1510]">
+      <div
+        className="relative w-full h-[240px] sm:h-[265px] overflow-hidden rounded-t-[28px] bg-[#1a1510]"
+        style={{ height: '240px', width: '100%', position: 'relative', overflow: 'hidden' }}
+      >
         <img
           src={coverImage}
           alt={`${name} cover`}
           className="w-full h-full object-cover object-center scale-102"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
         {/* Soft warm vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent pointer-events-none" />
@@ -90,11 +94,15 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
           </div>
 
           {/* Center SEPARATE Circular Logo Container (Displays admin-uploaded logo or default Anbu logo) */}
-          <div className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-5 sm:ring-6 ring-[#FEF3C7] transition-transform duration-200 hover:scale-102 w-[122px] h-[122px] sm:w-[130px] sm:h-[130px] z-20">
+          <div
+            className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-5 sm:ring-6 ring-[#FEF3C7] transition-transform duration-200 hover:scale-102 w-[122px] h-[122px] sm:w-[130px] sm:h-[130px] z-20"
+            style={{ width: '122px', height: '122px', borderRadius: '9999px', overflow: 'hidden' }}
+          >
             <img
               src={logoUrl}
               alt={name}
               className="w-full h-full object-cover rounded-full"
+              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '9999px' }}
             />
           </div>
 
