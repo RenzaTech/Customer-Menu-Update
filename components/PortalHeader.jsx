@@ -55,7 +55,7 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
           preserveAspectRatio="none"
           className="absolute -bottom-1 left-0 w-full h-16 sm:h-20 text-[#FFFCF7] fill-current pointer-events-none block z-0"
         >
-          <path d="M0,60 C80,22 150,26 210,50 C235,60 265,60 290,50 C350,26 420,22 500,60 L500,105 L0,105 Z" />
+          <path d="M0,50 C100,80 160,28 250,52 C340,76 400,28 500,48 L500,105 L0,105 Z" />
         </svg>
       </div>
 
@@ -63,39 +63,18 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
       <div className="relative max-w-sm mx-auto px-4 -mt-[62px] sm:-mt-[68px] flex flex-col items-center text-center z-10">
         {/* Center Circular Logo with Botanical Leaves & Coffee Beans Anchored Directly to Logo */}
         <div className="relative flex items-center justify-center">
-          {/* Left Decorative Botanical Leaves & Coffee Beans */}
-          <div className="absolute right-[88px] sm:right-[96px] top-1/2 -translate-y-1/2 flex items-center pointer-events-none select-none z-10">
-            {/* Soft Warm Watercolor Splash */}
-            <div className="absolute -left-3 -top-3 w-20 h-16 bg-[#EDE3D2]/85 rounded-full blur-md -z-10" />
-
-            {/* Roasted Coffee Beans Left */}
-            <div className="relative -ml-2 -mt-3 z-20">
-              <svg className="w-5 h-5 -rotate-12 drop-shadow-sm text-[#451a03]" viewBox="0 0 24 24" fill="currentColor">
-                <ellipse cx="12" cy="12" rx="9" ry="6" fill="#582914" />
-                <path d="M12 6 Q 14 12 12 18" stroke="#2c140a" strokeWidth="1.6" fill="none" />
-              </svg>
-              <svg className="w-4 h-4 rotate-35 -mt-1 ml-1 drop-shadow-sm text-[#451a03]" viewBox="0 0 24 24" fill="currentColor">
-                <ellipse cx="12" cy="12" rx="9" ry="6" fill="#6d351b" />
-                <path d="M12 6 Q 10 12 12 18" stroke="#371b0d" strokeWidth="1.5" fill="none" />
-              </svg>
-            </div>
-
-            {/* Green Botanical Leaves Left */}
-            <svg
-              className="w-14 h-14 sm:w-16 sm:h-16 -rotate-25 text-emerald-600 drop-shadow-xs z-10"
-              viewBox="0 0 64 64"
-              fill="currentColor"
-            >
-              <path d="M12 48 C 12 24, 34 14, 52 14 C 48 32, 34 50, 12 48 Z" fill="#4ADE80" opacity="0.95" />
-              <path d="M12 48 Q 30 32 52 14" stroke="#166534" strokeWidth="2.2" fill="none" opacity="0.8" />
-              <path d="M2 38 C 2 20, 20 12, 34 12 C 30 26, 20 40, 2 38 Z" fill="#22C55E" opacity="0.85" />
-              <path d="M2 38 Q 18 26 34 12" stroke="#166534" strokeWidth="1.8" fill="none" opacity="0.7" />
-            </svg>
+          {/* Left Decorative Botanical Leaves & Coffee Beans (Realistic 3D Artwork) */}
+          <div className="absolute right-[78px] sm:right-[86px] top-1/2 -translate-y-1/2 w-[140px] sm:w-[155px] pointer-events-none select-none z-10">
+            <img
+              src="/hub/realistic-leaves-left.png"
+              alt="Decorative leaves and coffee beans"
+              className="w-full h-auto object-contain block drop-shadow-xs"
+            />
           </div>
 
           {/* Center SEPARATE Circular Logo Container (Displays admin-uploaded logo or default Anbu logo) */}
           <div
-            className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-5 sm:ring-6 ring-[#FEF3C7] transition-transform duration-200 hover:scale-102 w-[122px] h-[122px] sm:w-[130px] sm:h-[130px] z-20"
+            className="relative rounded-full bg-white p-1.5 shadow-[0_10px_28px_rgba(255,184,0,0.22)] border-2 border-[#FFB800]/50 flex items-center justify-center overflow-hidden ring-4 sm:ring-5 ring-[#FEF3C7] transition-transform duration-200 hover:scale-102 w-[122px] h-[122px] sm:w-[130px] sm:h-[130px] z-20"
             style={{ width: '122px', height: '122px', borderRadius: '9999px', overflow: 'hidden' }}
           >
             <img
@@ -106,34 +85,13 @@ export default function PortalHeader({ restaurant, googleReviewUrl }) {
             />
           </div>
 
-          {/* Right Decorative Botanical Leaves & Coffee Beans */}
-          <div className="absolute left-[88px] sm:left-[96px] top-1/2 -translate-y-1/2 flex items-center pointer-events-none select-none z-10">
-            {/* Soft Warm Watercolor Splash */}
-            <div className="absolute -right-3 -top-3 w-20 h-16 bg-[#EDE3D2]/85 rounded-full blur-md -z-10" />
-
-            {/* Green Botanical Leaves Right */}
-            <svg
-              className="w-14 h-14 sm:w-16 sm:h-16 rotate-25 text-emerald-600 drop-shadow-xs scale-x-[-1] z-10"
-              viewBox="0 0 64 64"
-              fill="currentColor"
-            >
-              <path d="M12 48 C 12 24, 34 14, 52 14 C 48 32, 34 50, 12 48 Z" fill="#4ADE80" opacity="0.95" />
-              <path d="M12 48 Q 30 32 52 14" stroke="#166534" strokeWidth="2.2" fill="none" opacity="0.8" />
-              <path d="M2 38 C 2 20, 20 12, 34 12 C 30 26, 20 40, 2 38 Z" fill="#22C55E" opacity="0.85" />
-              <path d="M2 38 Q 18 26 34 12" stroke="#166534" strokeWidth="1.8" fill="none" opacity="0.7" />
-            </svg>
-
-            {/* Roasted Coffee Beans Right */}
-            <div className="relative -mr-2 -mt-3 z-20">
-              <svg className="w-5 h-5 rotate-45 drop-shadow-sm text-[#451a03]" viewBox="0 0 24 24" fill="currentColor">
-                <ellipse cx="12" cy="12" rx="9" ry="6" fill="#582914" />
-                <path d="M12 6 Q 14 12 12 18" stroke="#2c140a" strokeWidth="1.6" fill="none" />
-              </svg>
-              <svg className="w-4 h-4 -rotate-20 -mt-1 mr-1 drop-shadow-sm text-[#451a03]" viewBox="0 0 24 24" fill="currentColor">
-                <ellipse cx="12" cy="12" rx="9" ry="6" fill="#6d351b" />
-                <path d="M12 6 Q 10 12 12 18" stroke="#371b0d" strokeWidth="1.5" fill="none" />
-              </svg>
-            </div>
+          {/* Right Decorative Botanical Leaves & Coffee Beans (Realistic 3D Artwork) */}
+          <div className="absolute left-[78px] sm:left-[86px] top-1/2 -translate-y-1/2 w-[140px] sm:w-[155px] pointer-events-none select-none z-10">
+            <img
+              src="/hub/realistic-leaves-right.png"
+              alt="Decorative leaves and coffee beans"
+              className="w-full h-auto object-contain block drop-shadow-xs"
+            />
           </div>
         </div>
 
