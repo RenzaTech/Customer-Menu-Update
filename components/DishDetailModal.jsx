@@ -113,6 +113,18 @@ export default function DishDetailModal({ dish, onClose }) {
   const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
   const { imageUrl, description } = getDishImagePair(dish);
 
+  const comboList = dish.isCombo
+    ? Array.isArray(dish.comboItemsList)
+      ? dish.comboItemsList
+      : (() => {
+          try {
+            return typeof dish.comboItems === 'string' ? JSON.parse(dish.comboItems) : (dish.comboItems || []);
+          } catch {
+            return [];
+          }
+        })()
+    : [];
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/45 backdrop-blur-sm transition-opacity"
@@ -164,6 +176,11 @@ export default function DishDetailModal({ dish, onClose }) {
                 <h2 className="text-lg sm:text-xl font-bold text-gray-900 tracking-tight font-sans">
                   {dish.name}
                 </h2>
+                {dish.isCombo && (
+                  <span className="shrink-0 text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[#FFF5D9] text-[#8A5700] border border-[#FFBB17]/40 shadow-2xs">
+                    🍱 {dish.comboLabel || 'Combo'}
+                  </span>
+                )}
               </div>
 
               {/* Price */}
@@ -178,10 +195,35 @@ export default function DishDetailModal({ dish, onClose }) {
             <div className="mt-2.5 flex items-center gap-2">
               <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#FFF8E7] text-[#92400E] border border-[#FFBB17]/40">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#FFBB17]" />
-                Freshly Prepared on Order
+                {dish.isCombo ? 'Combo Value Deal' : 'Freshly Prepared on Order'}
               </span>
             </div>
           </div>
+
+          {/* Bundled Combo Items Card */}
+          {dish.isCombo && comboList.length > 0 && (
+            <div className="p-3.5 rounded-2xl bg-[#FFF8E7] border border-[#FFBB17]/40 space-y-2">
+              <div className="flex items-center justify-between text-xs font-bold text-[#8A5700] uppercase tracking-wide">
+                <span>🍱 Included Dishes ({comboList.length})</span>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#FFE3A0] text-[#714300]">
+                  Single Deal Price
+                </span>
+              </div>
+              <div className="space-y-1.5 pt-1">
+                {comboList.map((c, idx) => (
+                  <div key={idx} className="flex items-center gap-2 text-xs text-gray-800 bg-white p-2 rounded-xl border border-[#FFE3A0]/60">
+                    <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0">
+                      ✓
+                    </span>
+                    <span className="font-bold text-[#8A5700] shrink-0 font-mono text-[11px]">
+                      {c.quantity || '1x'}
+                    </span>
+                    <span className="font-medium truncate">{c.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Description Section */}
           <div className="pt-2 border-t border-gray-100">

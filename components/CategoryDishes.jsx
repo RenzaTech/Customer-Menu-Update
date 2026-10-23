@@ -192,6 +192,17 @@ export default function CategoryDishes({
             const isAvailable = dish.isAvailable !== false;
             const isVeg = dish.isVeg === true || dish.isVeg === 1 || dish.dietary === 'veg';
             const { imageUrl } = getDishImagePair(dish);
+            const comboList = dish.isCombo
+              ? Array.isArray(dish.comboItemsList)
+                ? dish.comboItemsList
+                : (() => {
+                    try {
+                      return typeof dish.comboItems === 'string' ? JSON.parse(dish.comboItems) : (dish.comboItems || []);
+                    } catch {
+                      return [];
+                    }
+                  })()
+              : [];
 
             return (
               <div
@@ -221,9 +232,16 @@ export default function CategoryDishes({
 
                 {/* Center: Dish Info */}
                 <div className="flex-1 min-w-0 pr-1 flex flex-col justify-center">
-                  <h3 className="text-sm sm:text-[15px] font-bold text-[#182238] font-sans tracking-tight truncate group-hover:text-black transition-colors">
-                    {dish.name}
-                  </h3>
+                  <div className="flex items-center gap-1.5 truncate">
+                    <h3 className="text-sm sm:text-[15px] font-bold text-[#182238] font-sans tracking-tight truncate group-hover:text-black transition-colors">
+                      {dish.name}
+                    </h3>
+                    {dish.isCombo && (
+                      <span className="shrink-0 text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#FFF5D9] text-[#8A5700] border border-[#FFBB17]/40 shadow-2xs">
+                        🍱 {dish.comboLabel || 'Combo'}
+                      </span>
+                    )}
+                  </div>
 
                   {dish.description ? (
                     <p className="text-[11px] sm:text-xs text-[#737D8D] line-clamp-1 mt-0.5 font-sans leading-relaxed">
@@ -232,6 +250,12 @@ export default function CategoryDishes({
                   ) : (
                     <p className="text-[11px] text-[#9AA3B2] mt-0.5 font-sans">
                       Freshly prepared on order
+                    </p>
+                  )}
+
+                  {dish.isCombo && comboList.length > 0 && (
+                    <p className="text-[10px] text-[#8A5700] line-clamp-1 mt-0.5 font-sans font-medium">
+                      Includes: {comboList.map((c) => `${c.quantity ? c.quantity + ' ' : ''}${c.name}`).join(', ')}
                     </p>
                   )}
 
