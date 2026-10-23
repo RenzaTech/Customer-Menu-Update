@@ -215,9 +215,11 @@ export default function DishDetailModal({ dish, onClose }) {
                     <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[10px] font-bold shrink-0">
                       ✓
                     </span>
-                    <span className="font-bold text-[#8A5700] shrink-0 font-mono text-[11px]">
-                      {c.quantity || '1x'}
-                    </span>
+                    {c.quantity && (
+                      <span className="font-bold text-[#8A5700] shrink-0 font-mono text-[11px]">
+                        {c.quantity}
+                      </span>
+                    )}
                     <span className="font-medium truncate">{c.name}</span>
                   </div>
                 ))}
